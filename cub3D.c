@@ -6,7 +6,7 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:58:26 by aammisse          #+#    #+#             */
-/*   Updated: 2025/07/06 15:02:12 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/07/07 13:37:52 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,18 +193,42 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (substr);
 }
 
-t_colors handle_colors(char *str)
+int parse_colors(char *str)
+{
+	int i;
+	int check;
+
+	i = 0;
+	check = 0;
+	while(str[i] && str[i] == ' ')
+		i++;
+	while (str[i])
+	{
+		if (!isdigit(str[i]) && str[i] != ',')
+			return (1);
+		if (str[i] == ',')
+			check++;
+		if (check > 2)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+t_colors handle_colors(char *str, t_cube *data)
 {
 	t_colors rgb;
 	int len;
 	char *string;
 	char **colors;
 
+	(void)data;
 	len = 2;
 	while (str[len])
 		len++;
-	string = ft_substr(str, 2, len);
-	// parse colors
+	string = ft_substr(str, 2, len - 3);
+	if (parse_colors(string))
+		exit(120);
 	colors = ft_split(string, ',');
 	rgb.r = ft_atoi(colors[0]);
 	rgb.g = ft_atoi(colors[1]);
@@ -224,7 +248,7 @@ char *handle_texture(char *str)
 	len = start;
 	while (str[len])
 		len++;
-	texture_file = ft_substr(str, start, len);
+	texture_file = ft_substr(str, start, len - 3);
 	return (texture_file);
 }
 
@@ -252,12 +276,12 @@ void handle_directions(char *str, t_cube *data, int *count)
 	}
 	else if (!ft_strncmp(str, "F ", 2))
 	{
-		data->texture.floorcolor = handle_colors(str);
+		data->texture.floor_color = handle_colors(str, data);
 		(*count)++;
 	}
 	else if (!ft_strncmp(str, "C ", 2))
 	{
-		data->texture.skycolor = handle_colors(str);
+		data->texture.sky_color = handle_colors(str, data);
 		(*count)++;
 	}
 }
@@ -320,18 +344,237 @@ void read_from_map(t_cube *data)
 	char *line;
 
 	count = 0;
-	while((line = get_next_line(data->mapfd)))
+	while((line = get_next_line(data->map_fd)))
 	{
 		if (count < 6)
 			handle_directions(line, data, &count);
 		else if (count == 6)
-			newnode(line, &data->map);
+			newnode(line, &data->list_map);
 		else
 			exit(1);
 		free(line);
 	}
 }
 
+int	ft_lstsize(t_map *lst)
+{
+	int	i;
+
+	if (!lst)
+		return (0);
+	i = 0;
+	while (lst != NULL)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
+}
+
+static char	*alloc(char *str)
+{
+	int		i;
+	char	*string;
+
+	i = 0;
+	string = (char *)malloc(ft_strlen(str) + 1);
+	if (!string)
+		return (NULL);
+	while (str[i] != '\0')
+	{
+		string[i] = str[i];
+		i++;
+	}
+	string[i] = '\0';
+	return (string);
+}
+
+static int	in_set(char c, char *set)
+{
+	int	i;
+
+	i = 0;
+	while (set[i] != '\0')
+	{
+		if (set[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	*ft_strtrim(const char *s1, const char *set)
+{
+	size_t	startind;
+	size_t	lastind;
+	char	*trim;
+
+	if (s1 != NULL && set == NULL)
+		return (alloc((char *)s1));
+	else if ((s1 == NULL && set == NULL) || (s1 == NULL && set != NULL))
+		return (NULL);
+	startind = 0;
+	lastind = ft_strlen((char *)s1) - 1;
+	while (in_set(s1[startind], (char *)set) && s1[startind] != '\0')
+		startind++;
+	if (s1[startind] == '\0')
+		return (ft_strdup(""));
+	while (in_set(s1[lastind], (char *)set) && lastind > startind)
+		lastind--;
+	trim = (char *)malloc(lastind - startind + 2);
+	if (trim == NULL)
+		return (NULL);
+	ft_strlcpy(trim, s1 + startind, lastind - startind + 2);
+	return (trim);
+}
+
+void printmap(t_cube *data)
+{
+	printf("%s\n", data->texture.west);
+	printf("%s\n", data->texture.south);
+	printf("%s\n", data->texture.north);
+	printf("%s\n", data->texture.east);
+	printf("%d\n", data->texture.floor_color.r);
+	printf("%d\n", data->texture.floor_color.g);
+	printf("%d\n", data->texture.floor_color.b);
+	printf("%d\n", data->texture.sky_color.r);
+	printf("%d\n", data->texture.sky_color.g);
+	printf("%d\n", data->texture.sky_color.b);
+	int i = 0;
+	while(data->map[i])
+		printf("%s\n", data->map[i++]);
+}
+
+void	make_map(t_cube *data)
+{
+	int i;
+	t_map *ptr;
+
+	i = 0;
+	ptr = data->list_map;
+	while (ptr)
+	{
+		if (ptr->line[0] == '\n' && ptr->line[1] == '\0')
+			ptr = ptr->next;
+		else
+			break ;
+	}
+	data->map = malloc(sizeof(char *) * (ft_lstsize(ptr) + 1));
+	while (ptr)
+	{
+		data->map[i] = ft_strdup(ft_strtrim(ptr->line, "\n"));
+		i++;
+		ptr = ptr->next;
+	}
+	data->map[i] = NULL;
+}
+
+int check_newline(char **map)
+{
+	int i;
+
+	i = 0;
+	while(map[i])
+	{
+		if (map[i][0] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int check_top_bot(char **map)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while(map[0][i])
+	{
+		if (map[0][i] == '0')
+			return (1);
+		i++;
+	}
+	i = 0;
+	while(map[i])
+		i++;
+	i--;
+	j = 0;
+	while(map[i][j])
+	{
+		if (map[i][j] == '0')
+			return (1);
+		j++;
+	}
+	return (0);
+}
+
+int check_edges(char **map)
+{
+	int i;
+
+	if (check_top_bot(map))
+		return (1);
+	i = 0;
+	while (map[i])
+	{
+		if (map[i][0] == '0' || map[i][ft_strlen(map[i]) - 1] == '0')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int lengthcalc(size_t a, char *string)
+{
+	if (a > ft_strlen(string) - 1)
+		return 1;
+	return (0);
+}
+
+int check_middle(char **map)
+{
+	size_t i;
+	size_t j;
+
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while(map[i][j])
+		{
+			if ((map[i][j] == '0' || strchr("NSEW", map[i][j])) && (map[i][j + 1] == ' ' || map[i][j - 1] == ' '))
+				return (1);
+			else if ((map[i][j] == '0' || strchr("NSEW", map[i][j])) && (((lengthcalc(j, map[i + 1])) || (lengthcalc(j, map[i - 1])))
+					|| (map[i - 1][j] == ' ') || (map[i + 1][j] == ' ')))
+				return (1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	parse_map(t_cube *data)
+{
+	if (check_newline(data->map))
+		return (1);
+	if (check_edges(data->map))
+		return (1);
+	if (check_middle(data->map))
+		return (1);
+	return (0);
+}
+
+void create_map(t_cube *data)
+{
+	make_map(data);
+	if (parse_map(data))
+	{
+		write(2, "Error in map\n", 14);
+		exit(1);
+	}
+}
 
 int main(int ac, char **av)
 {
@@ -342,23 +585,11 @@ int main(int ac, char **av)
 		write(2, "Invalid File Map!\n", 19);
 		return (1);
 	}
-	data.mapfile = ft_strdup(av[1]);
-	data.mapfd = openmap(av[1]);
+	data.map_file = ft_strdup(av[1]);
+	data.map_fd = openmap(av[1]);
+	data.list_map = NULL;
 	data.map = NULL;
 	read_from_map(&data);
-	printf("%s\n", data.texture.west);
-	printf("%s\n", data.texture.south);
-	printf("%s\n", data.texture.north);
-	printf("%s\n", data.texture.east);
-	printf("%d\n", data.texture.floorcolor.r);
-	printf("%d\n", data.texture.floorcolor.g);
-	printf("%d\n", data.texture.floorcolor.b);
-	printf("%d\n", data.texture.skycolor.r);
-	printf("%d\n", data.texture.skycolor.g);
-	printf("%d\n", data.texture.skycolor.b);
-	while (data.map)
-	{
-		printf("%s", data.map->line);
-		data.map = data.map->next;
-	}
+	create_map(&data);
+	printmap(&data);
 }

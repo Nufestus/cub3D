@@ -6,7 +6,7 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 18:08:57 by aammisse          #+#    #+#             */
-/*   Updated: 2025/07/06 15:15:22 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/07/06 17:46:40 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,16 @@ typedef struct	s_texture
 	char *south;
 	char *west;
 	char *east;
-	t_colors floorcolor;
-	t_colors skycolor;
+	t_colors floor_color;
+	t_colors sky_color;
 }				t_texture;
 
 typedef struct	s_cube
 {
-	int mapfd;
-	char *mapfile;
-	char	**bomboclat;
-	t_map *map;
+	int map_fd;
+	char *map_file;
+	char **map;
+	t_map *list_map;
 	t_texture texture;
 }				t_cube;
 
