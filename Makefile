@@ -6,7 +6,7 @@
 #    By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/05 17:56:35 by aammisse          #+#    #+#              #
-#    Updated: 2025/07/06 21:19:49 by aammisse         ###   ########.fr        #
+#    Updated: 2025/07/08 20:45:01 by aammisse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,9 +24,9 @@ OBJS = ${SRCS:.c=.o}
 all: ${NAME}
 
 ${NAME}: ${OBJS}
-	${CC} ${FLAGS} ${OBJS} -o $@
+	${CC} ${FLAGS} ${OBJS} libmlx_Linux.a -lX11 -lXext -o $@
 
-%.o: %.c
+%.o: %.c cub3D.h
 	${CC} ${FLAGS} -c $< -o $@
 
 clean:
