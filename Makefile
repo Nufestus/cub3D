@@ -24,9 +24,9 @@ OBJS = ${SRCS:.c=.o}
 all: ${NAME}
 
 ${NAME}: ${OBJS}
-	${CC} ${FLAGS} ${OBJS} libmlx_Linux.a -lX11 -lXext -o $@
+	${CC} ${FLAGS} ${OBJS} libmlx.a -framework OpenGL -framework AppKit -o $@
 
-%.o: %.c cub3D.h
+%.o: %.c
 	${CC} ${FLAGS} -c $< -o $@
 
 clean:

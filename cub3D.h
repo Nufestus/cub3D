@@ -23,10 +23,16 @@
 #include <string.h>
 #include <sys/time.h>
 #include "GNL/get_next_line.h"
-#include "minilibx-linux/mlx.h"
+#include "minilibx_opengl/mlx.h"
 
 # define TILE_SIZE 30
 # define PLR_SPEED 0.1
+
+#define ESC 53
+#define W_KEY 13
+#define S_KEY 1
+#define D_KEY 2
+#define A_KEY 0
 
 #define HEIGHT 800
 #define WIDTH 800

@@ -683,15 +683,15 @@ void create_map(t_cube *data)
 
 int handle_keys(int key, t_cube *data)
 {
-	if (key == 65307)
+	if (key == ESC)
 		exit(1);
-	else if (key == 119 && data->map[data->playery - 1][data->playerx] != '1')
+	else if (key == W_KEY && data->map[data->playery - 1][data->playerx] != '1')
 		data->playery--;
-	else if (key == 115 && data->map[data->playery + 1][data->playerx] != '1')
+	else if (key == S_KEY && data->map[data->playery + 1][data->playerx] != '1')
 		data->playery++;
-	else if (key == 100 && data->map[data->playery][data->playerx + 1] != '1')
+	else if (key == D_KEY && data->map[data->playery][data->playerx + 1] != '1')
 		data->playerx++;
-	else if (key == 97 && data->map[data->playery][data->playerx - 1] != '1')
+	else if (key == A_KEY && data->map[data->playery][data->playerx - 1] != '1')
 		data->playerx--;
 	return (0);
 }
