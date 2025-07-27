@@ -27,7 +27,7 @@
 #include "minilibx_opengl/mlx.h"
 
 # define TILE_SIZE 30
-# define PLR_SPEED 0.1
+# define PLR_SPEED 10
 
 #define ESC 53
 #define W_KEY 13
@@ -91,6 +91,6 @@ typedef struct	s_cube
 }				t_cube;
 
 char	*ft_strtrim(const char *s1, const char *set);
-int calculate_pixel(double fract);
+int calculate_pixel(int fract);
 
 #endif

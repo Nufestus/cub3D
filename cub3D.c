@@ -611,10 +611,8 @@ int check_middle(char **map, t_cube *data)
 				return (1);
 			if (strchr("NSEW", map[i][j]))
 			{
-				data->playerx = j;
-				data->playery = i;
-				data->pixelx = calculate_pixel(data->playerx) + (TILE_SIZE / 2);
-				data->pixely = calculate_pixel(data->playery) + (TILE_SIZE / 2);
+				data->pixely = calculate_pixel(i) + (TILE_SIZE / 2);
+				data->pixelx = calculate_pixel(j) + (TILE_SIZE / 2);
 				map[i][j] = '0';
 			}
 			j++;
@@ -679,28 +677,27 @@ unsigned int get_pixel_address(t_mlx *mlx, int x, int y, t_cube *data)
 	char *dst;
 
 	dst = NULL;
-	printf("%d / %d / %d / %d\n", x, y, data->width * TILE_SIZE, data->height * TILE_SIZE);
+	printf("%d - %d - %d - %d\n", x, y, data->width * TILE_SIZE, data->height * TILE_SIZE);
 	if (x < 0 || y < 0 || x >= data->width * TILE_SIZE || y >= data->height * TILE_SIZE)
-		return (0);
+		return (INT_MAX);
 	dst = mlx->img.addr + (y * mlx->img.line_length + x * (mlx->img.bits_per_pixel / 8));
-	printf("%d\n", *(unsigned int *)dst);
-	return (*(unsigned int *)dst);
+	if (*(unsigned int *)dst == 0xFFFFFF)	
+		return (1);
+	return (0);
 }
 
 int handle_keys(int key, t_cube *data)
 {
-
-	printf("%d\n", get_pixel_address(data->mlxstruct.mlx, data->pixelx, data->pixely, data));
 	if (key == ESC)
 		exit(1);
-	else if (key == W_KEY && get_pixel_address(data->mlxstruct.mlx, data->pixelx, data->pixely, data) != 0xFFFFFF)
-		data->playery -= PLR_SPEED;
-	// else if (key == S_KEY && data->map[plry2][(int)floor(data->playerx)] != '1')
-	// 	data->playery += PLR_SPEED;
-	// else if (key == D_KEY && data->map[(int)floor(data->playery)][plrx2] != '1')
-	// 	data->playerx += PLR_SPEED;
-	// else if (key == A_KEY && data->map[(int)floor(data->playery)][plrx1] != '1')
-	// 	data->playerx -= PLR_SPEED;
+	else if (key == W_KEY && get_pixel_address(&data->mlxstruct, data->pixelx, data->pixely - PLR_SPEED, data) != 1)
+		data->pixely -= PLR_SPEED;
+	else if (key == S_KEY && get_pixel_address(&data->mlxstruct, data->pixelx, data->pixely + PLR_SPEED, data) != 1)
+		data->pixely += PLR_SPEED;
+	else if (key == D_KEY && get_pixel_address(&data->mlxstruct, data->pixelx + PLR_SPEED, data->pixely, data) != 1)
+		data->pixelx += PLR_SPEED;
+	else if (key == A_KEY && get_pixel_address(&data->mlxstruct, data->pixelx - PLR_SPEED, data->pixely, data) != 1)
+		data->pixelx -= PLR_SPEED;
 	return (0);
 }
 
@@ -713,7 +710,7 @@ void my_mlx_pixel_put(t_mlx *mlx, int x, int y, unsigned int color)
 	*(unsigned int *)dst = color;
 }
 
-int calculate_pixel(double fract)
+int calculate_pixel(int fract)
 {
 	return (fract * TILE_SIZE);
 }
@@ -773,8 +770,6 @@ int rendering(t_cube *data)
 		}
 		i++;
 	}
-	// data->pixelx = calculate_pixel(data->playerx);
-	// data->pixely = calculate_pixel(data->playery);
 	draw_filled_circle(data->pixelx, data->pixely, 3, data);
 	// int k  = 0;
 	// while (data->map[k])
