@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:58:26 by aammisse          #+#    #+#             */
-/*   Updated: 2025/07/12 14:00:23 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/07/26 17:34:02 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+size_t ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	size_t	i;
-	size_t	len;
+	size_t i;
+	size_t len;
 
 	i = 0;
 	len = 0;
@@ -33,7 +33,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	return (len);
 }
 
-static int	handle(unsigned char c, unsigned char b)
+static int handle(unsigned char c, unsigned char b)
 {
 	if (c - b > 0)
 		return (1);
@@ -42,11 +42,11 @@ static int	handle(unsigned char c, unsigned char b)
 	return (0);
 }
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	size_t			i;
-	unsigned char	*str1;
-	unsigned char	*str2;
+	size_t i;
+	unsigned char *str1;
+	unsigned char *str2;
 
 	i = 0;
 	str1 = (unsigned char *)s1;
@@ -60,7 +60,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
-static int	check_sign(int sign)
+static int check_sign(int sign)
 {
 	if (sign < 0)
 		return (0);
@@ -68,12 +68,12 @@ static int	check_sign(int sign)
 		return (-1);
 }
 
-int	ft_atoi(const char *str)
+int ft_atoi(const char *str)
 {
-	long long	result;
-	long long	old_result;
-	int			sign;
-	int			i;
+	long long result;
+	long long old_result;
+	int sign;
+	int i;
 
 	result = 0;
 	sign = 1;
@@ -97,10 +97,10 @@ int	ft_atoi(const char *str)
 	return (result);
 }
 
-static size_t	count_words(char *s, char c)
+static size_t count_words(char *s, char c)
 {
-	unsigned int	i;
-	size_t			word;
+	unsigned int i;
+	size_t word;
 
 	i = 0;
 	word = 0;
@@ -113,9 +113,9 @@ static size_t	count_words(char *s, char c)
 	return (word);
 }
 
-static size_t	str_length(char const *s, char c)
+static size_t str_length(char const *s, char c)
 {
-	size_t	i;
+	size_t i;
 
 	i = 0;
 	while (s[i] && s[i] != c)
@@ -123,9 +123,9 @@ static size_t	str_length(char const *s, char c)
 	return (i);
 }
 
-static char	**free_mem(char **s, int i)
+static char **free_mem(char **s, int i)
 {
-	int	index;
+	int index;
 
 	index = 0;
 	while (index < i)
@@ -137,17 +137,17 @@ static char	**free_mem(char **s, int i)
 	return (NULL);
 }
 
-char	**ft_split(char const *s, char c)
+char **ft_split(char const *s, char c)
 {
-	size_t	k;
-	size_t	index;
-	char	**p;
+	size_t k;
+	size_t index;
+	char **p;
 
 	if (!s)
 		return (NULL);
 	k = count_words((char *)s, c);
 	index = 0;
-	p = (char **) malloc((sizeof(char *)) * (k + 1));
+	p = (char **)malloc((sizeof(char *)) * (k + 1));
 	if (!p)
 		return (NULL);
 	while (index < k)
@@ -165,11 +165,11 @@ char	**ft_split(char const *s, char c)
 	return (p);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char *ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t	i;
-	char	*str;
-	char	*substr;
+	size_t i;
+	char *str;
+	char *substr;
 
 	if (!s)
 		return (NULL);
@@ -179,7 +179,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (ft_strdup(""));
 	if (len > i - start)
 		len = i - start;
-	substr = (char *) malloc(len + 1);
+	substr = (char *)malloc(len + 1);
 	if (!substr)
 		return (NULL);
 	i = 0;
@@ -200,7 +200,7 @@ int parse_colors(char *str)
 
 	i = 0;
 	check = 0;
-	while(str[i] && str[i] == ' ')
+	while (str[i] && str[i] == ' ')
 		i++;
 	while (str[i])
 	{
@@ -259,7 +259,7 @@ char *handle_texture(char *str)
 	char *texture_file;
 
 	start = 3;
-	while(str[start] && isspace(str[start]))
+	while (str[start] && isspace(str[start]))
 		start++;
 	len = start;
 	while (str[len])
@@ -320,7 +320,7 @@ int openmap(char *str)
 	return (fd);
 }
 
-t_map	*ft_lstlast(t_map *lst)
+t_map *ft_lstlast(t_map *lst)
 {
 	if (!lst)
 		return (NULL);
@@ -329,21 +329,21 @@ t_map	*ft_lstlast(t_map *lst)
 	return (lst);
 }
 
-void	ft_lstadd_back(t_map **lst, t_map *new)
+void ft_lstadd_back(t_map **lst, t_map *new)
 {
 	if (!lst || !new)
-		return ;
+		return;
 	if (*lst)
 		ft_lstlast(*lst)->next = new;
 	else
 		*lst = new;
 }
 
-t_map	*ft_lstnew(char *content)
+t_map *ft_lstnew(char *content)
 {
-	t_map	*newnode;
+	t_map *newnode;
 
-	newnode = (t_map *) malloc (sizeof(t_map));
+	newnode = (t_map *)malloc(sizeof(t_map));
 	if (!newnode)
 		return (NULL);
 	newnode->line = content;
@@ -351,7 +351,7 @@ t_map	*ft_lstnew(char *content)
 	return (newnode);
 }
 
-void	newnode(char *str, t_map **head)
+void newnode(char *str, t_map **head)
 {
 	t_map *newnode;
 
@@ -381,10 +381,10 @@ void read_from_map(t_cube *data)
 
 	count = 0;
 	linecount = 0;
-	while((line = get_next_line(data->map_fd)))
+	while ((line = get_next_line(data->map_fd)))
 	{
 		if (linecount >= 6 && count != 6)
-			return ;
+			return;
 		if (count < 6)
 			handle_directions(line, data, &count);
 		else if (count == 6)
@@ -395,9 +395,9 @@ void read_from_map(t_cube *data)
 	}
 }
 
-int	ft_lstsize(t_map *lst)
+int ft_lstsize(t_map *lst)
 {
-	int	i;
+	int i;
 
 	if (!lst)
 		return (0);
@@ -410,10 +410,10 @@ int	ft_lstsize(t_map *lst)
 	return (i);
 }
 
-static char	*alloc(char *str)
+static char *alloc(char *str)
 {
-	int		i;
-	char	*string;
+	int i;
+	char *string;
 
 	i = 0;
 	string = (char *)malloc(ft_strlen(str) + 1);
@@ -428,9 +428,9 @@ static char	*alloc(char *str)
 	return (string);
 }
 
-static int	in_set(char c, char *set)
+static int in_set(char c, char *set)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (set[i] != '\0')
@@ -442,11 +442,11 @@ static int	in_set(char c, char *set)
 	return (0);
 }
 
-char	*ft_strtrim(const char *s1, const char *set)
+char *ft_strtrim(const char *s1, const char *set)
 {
-	size_t	startind;
-	size_t	lastind;
-	char	*trim;
+	size_t startind;
+	size_t lastind;
+	char *trim;
 
 	if (s1 != NULL && set == NULL)
 		return (alloc((char *)s1));
@@ -480,7 +480,7 @@ void printmap(t_cube *data)
 	printf("%d\n", data->texture.sky_color.g);
 	printf("%d\n", data->texture.sky_color.b);
 	int i = 0;
-	while(data->map[i])
+	while (data->map[i])
 		printf("\"%s\"\n", data->map[i++]);
 }
 
@@ -495,7 +495,7 @@ int count_without_space(t_map **ptr)
 		if ((*ptr)->line[0] == '\n' && (*ptr)->line[1] == '\0')
 			(*ptr) = (*ptr)->next;
 		else
-			break ;
+			break;
 	}
 	copy = *ptr;
 	while (copy)
@@ -509,10 +509,10 @@ int count_without_space(t_map **ptr)
 	return (ft_lstsize(*ptr) - i);
 }
 
-void	make_map(t_cube *data)
+void make_map(t_cube *data)
 {
 	int i;
-	int	len;
+	int len;
 	t_map *ptr;
 
 	i = 0;
@@ -534,7 +534,7 @@ int check_newline(char **map)
 	int i;
 
 	i = 0;
-	while(map[i])
+	while (map[i])
 	{
 		if (map[i][0] == '\n')
 			return (1);
@@ -549,22 +549,20 @@ int check_top_bot(char **map)
 	int j;
 
 	i = 0;
-	while(map[0][i])
+	while (map[0][i])
 	{
-		if (map[0][i] == '0'
-			|| strchr("NSEW", map[0][i]))
+		if (map[0][i] == '0' || strchr("NSEW", map[0][i]))
 			return (1);
 		i++;
 	}
 	i = 0;
-	while(map[i])
+	while (map[i])
 		i++;
 	i--;
 	j = 0;
-	while(map[i][j])
+	while (map[i][j])
 	{
-		if (map[i][j] == '0'
-			|| strchr("NSEW", map[i][j]))
+		if (map[i][j] == '0' || strchr("NSEW", map[i][j]))
 			return (1);
 		j++;
 	}
@@ -580,10 +578,7 @@ int check_edges(char **map)
 	i = 0;
 	while (map[i])
 	{
-		if (map[i][0] == '0'
-			|| map[i][ft_strlen(map[i]) - 1] == '0'
-			|| strchr("NSEW", map[i][0])
-			|| strchr("NSEW", map[i][ft_strlen(map[i]) - 1]))
+		if (map[i][0] == '0' || map[i][ft_strlen(map[i]) - 1] == '0' || strchr("NSEW", map[i][0]) || strchr("NSEW", map[i][ft_strlen(map[i]) - 1]))
 			return (1);
 		i++;
 	}
@@ -610,18 +605,16 @@ int check_middle(char **map, t_cube *data)
 		j = 0;
 		while (map[i][j])
 		{
-			if ((map[i][j] == '0' || strchr("NSEW", map[i][j]))
-				&& ((map[i][j + 1] && map[i][j + 1] == ' ')
-				|| (j > 0 && map[i][j - 1] && map[i][j - 1] == ' ')))
+			if ((map[i][j] == '0' || strchr("NSEW", map[i][j])) && ((map[i][j + 1] && map[i][j + 1] == ' ') || (j > 0 && map[i][j - 1] && map[i][j - 1] == ' ')))
 				return (1);
-			else if ((map[i][j] == '0' || strchr("NSEW", map[i][j]))
-					&& (((lengthcalc(j, map[i + 1])) || (i > 0 && lengthcalc(j, map[i - 1])))
-					|| (i > 0 && map[i - 1][j] == ' ') || (map[i + 1] && map[i + 1][j] == ' ')))
+			else if ((map[i][j] == '0' || strchr("NSEW", map[i][j])) && (((lengthcalc(j, map[i + 1])) || (i > 0 && lengthcalc(j, map[i - 1]))) || (i > 0 && map[i - 1][j] == ' ') || (map[i + 1] && map[i + 1][j] == ' ')))
 				return (1);
 			if (strchr("NSEW", map[i][j]))
 			{
 				data->playerx = j;
 				data->playery = i;
+				data->pixelx = calculate_pixel(data->playerx) + (TILE_SIZE / 2);
+				data->pixely = calculate_pixel(data->playery) + (TILE_SIZE / 2);
 				map[i][j] = '0';
 			}
 			j++;
@@ -658,7 +651,7 @@ int check_player(char **map)
 	return (0);
 }
 
-int	parse_map(t_cube *data)
+int parse_map(t_cube *data)
 {
 	if (check_newline(data->map))
 		return (1);
@@ -681,40 +674,74 @@ void create_map(t_cube *data)
 	}
 }
 
+unsigned int get_pixel_address(t_mlx *mlx, int x, int y, t_cube *data)
+{
+	char *dst;
+
+	dst = NULL;
+	printf("%d / %d / %d / %d\n", x, y, data->width * TILE_SIZE, data->height * TILE_SIZE);
+	if (x < 0 || y < 0 || x >= data->width * TILE_SIZE || y >= data->height * TILE_SIZE)
+		return (0);
+	dst = mlx->img.addr + (y * mlx->img.line_length + x * (mlx->img.bits_per_pixel / 8));
+	printf("%d\n", *(unsigned int *)dst);
+	return (*(unsigned int *)dst);
+}
+
 int handle_keys(int key, t_cube *data)
 {
+
+	printf("%d\n", get_pixel_address(data->mlxstruct.mlx, data->pixelx, data->pixely, data));
 	if (key == ESC)
 		exit(1);
-	else if (key == W_KEY && data->map[data->playery - 1][data->playerx] != '1')
-		data->playery--;
-	else if (key == S_KEY && data->map[data->playery + 1][data->playerx] != '1')
-		data->playery++;
-	else if (key == D_KEY && data->map[data->playery][data->playerx + 1] != '1')
-		data->playerx++;
-	else if (key == A_KEY && data->map[data->playery][data->playerx - 1] != '1')
-		data->playerx--;
+	else if (key == W_KEY && get_pixel_address(data->mlxstruct.mlx, data->pixelx, data->pixely, data) != 0xFFFFFF)
+		data->playery -= PLR_SPEED;
+	// else if (key == S_KEY && data->map[plry2][(int)floor(data->playerx)] != '1')
+	// 	data->playery += PLR_SPEED;
+	// else if (key == D_KEY && data->map[(int)floor(data->playery)][plrx2] != '1')
+	// 	data->playerx += PLR_SPEED;
+	// else if (key == A_KEY && data->map[(int)floor(data->playery)][plrx1] != '1')
+	// 	data->playerx -= PLR_SPEED;
 	return (0);
 }
 
-void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, unsigned int color)
+void my_mlx_pixel_put(t_mlx *mlx, int x, int y, unsigned int color)
 {
-	char	*dst;
+	char *dst;
 
 	dst = NULL;
 	dst = mlx->img.addr + (y * mlx->img.line_length + x * (mlx->img.bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	*(unsigned int *)dst = color;
+}
+
+int calculate_pixel(double fract)
+{
+	return (fract * TILE_SIZE);
+}
+
+void draw_filled_circle(int cx, int cy, int radius, t_cube *data)
+{
+    for (int y = -radius; y <= radius; y++)
+    {
+        for (int x = -radius; x <= radius; x++)
+        {
+            if (x * x + y * y <= radius * radius)
+            {
+                my_mlx_pixel_put(&data->mlxstruct, cx + x, cy + y, 0x00FF00);
+            }
+        }
+    }
 }
 
 void draw_tile(t_cube *data, int color, int x, int y)
 {
-	int	boundx;
-	int	boundy;
-	int	savex;
-	
+	int boundx;
+	int boundy;
+	int savex;
+
 	boundx = x + TILE_SIZE;
 	boundy = y + TILE_SIZE;
 	savex = x;
-	
+
 	while (y < boundy)
 	{
 		x = savex;
@@ -727,40 +754,40 @@ void draw_tile(t_cube *data, int color, int x, int y)
 	}
 }
 
-int is_player(t_cube *data, int i, int j)
-{
-	if (data->playerx == j && data->playery == i)
-		return (1);
-	return (0);
-}
-
-int random_in_range(int min, int max) {
-    return rand() % (max - min + 1) + min;
-}
-
 int rendering(t_cube *data)
 {
 	int i;
 	int j;
 
 	i = 0;
-	srand(time(NULL));
 	while (data->map[i])
 	{
 		j = 0;
-		while(data->map[i][j])
+		while (data->map[i][j])
 		{
-			printf("player x: %d : playery : %d\n", data->playerx, data->playery);
 			if (data->map[i][j] == '1')
 				draw_tile(data, 0xFFFFFF, j * TILE_SIZE, i * TILE_SIZE);
 			else if (data->map[i][j] == '0')
 				draw_tile(data, 0x000000, j * TILE_SIZE, i * TILE_SIZE);
-			if (is_player(data, i, j))
-				draw_tile(data, 0x00FF00, j * TILE_SIZE, i * TILE_SIZE);
 			j++;
 		}
 		i++;
 	}
+	// data->pixelx = calculate_pixel(data->playerx);
+	// data->pixely = calculate_pixel(data->playery);
+	draw_filled_circle(data->pixelx, data->pixely, 3, data);
+	// int k  = 0;
+	// while (data->map[k])
+	// {
+	// 	int f = 0;
+	// 	while (data->map[k][f])
+	// 	{
+	// 		if (plrx == f * TILE_SIZE && plry == k * TILE_SIZE)
+
+	// 		f++;
+	// 	}
+	// 	k++;
+	// }
 	mlx_put_image_to_window(data->mlxstruct.mlx, data->mlxstruct.win, data->mlxstruct.img.img, 0, 0);
 	return (0);
 }
@@ -771,7 +798,7 @@ void render_map(t_mlx *mlxstruct, t_cube *data)
 	mlxstruct->win = mlx_new_window(mlxstruct->mlx, data->width * TILE_SIZE, data->height * TILE_SIZE, "cub3D");
 	mlxstruct->img.img = mlx_new_image(mlxstruct->mlx, data->width * TILE_SIZE, data->height * TILE_SIZE);
 	mlxstruct->img.addr = mlx_get_data_addr(mlxstruct->img.img, &mlxstruct->img.bits_per_pixel, &mlxstruct->img.line_length,
-								&mlxstruct->img.endian);
+											&mlxstruct->img.endian);
 	mlx_key_hook(mlxstruct->win, handle_keys, data);
 	mlx_loop_hook(mlxstruct->mlx, rendering, data);
 	mlx_loop(mlxstruct->mlx);
@@ -780,7 +807,7 @@ void render_map(t_mlx *mlxstruct, t_cube *data)
 int main(int ac, char **av)
 {
 	t_cube data;
-	
+
 	if (ac != 2)
 	{
 		write(2, "Invalid File Map!\n", 19);

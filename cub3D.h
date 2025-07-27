@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 18:08:57 by aammisse          #+#    #+#             */
-/*   Updated: 2025/07/12 13:40:16 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/07/26 17:14:59 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define CUB3D_H
 
 #include <time.h>
+#include <math.h>
 #include <unistd.h>
 #include <string.h>
 #include <ctype.h>
@@ -33,9 +34,6 @@
 #define S_KEY 1
 #define D_KEY 2
 #define A_KEY 0
-
-#define HEIGHT 800
-#define WIDTH 800
 
 typedef struct s_map
 {
@@ -78,8 +76,10 @@ typedef struct s_mlx
 
 typedef struct	s_cube
 {
-	int playerx;
-	int playery;
+	double playerx;
+	double playery;
+	int pixelx;
+	int pixely;
 	int width;
 	int height;
 	int map_fd;
@@ -91,5 +91,6 @@ typedef struct	s_cube
 }				t_cube;
 
 char	*ft_strtrim(const char *s1, const char *set);
+int calculate_pixel(double fract);
 
 #endif
