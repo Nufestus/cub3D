@@ -6,7 +6,7 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:40:00 by aammisse          #+#    #+#             */
-/*   Updated: 2025/11/18 13:58:06 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/11/20 21:16:54 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void make_map(t_cube *data)
 	while (i < len)
 	{
 		// printf("%s", ptr->line);
-		data->map[i] = ft_strdup(ft_strtrim(ptr->line, "\n"));
+		data->map[i] = ft_strtrim(ptr->line, "\n");
 		i++;
 		ptr = ptr->next;
 	}

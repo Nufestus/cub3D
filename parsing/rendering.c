@@ -6,92 +6,67 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:41:32 by aammisse          #+#    #+#             */
-/*   Updated: 2025/11/18 13:51:41 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/11/24 14:59:03 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
-void draw_filled_circle(int cx, int cy, int radius, t_cube *data)
-{
-    for (int y = -radius; y <= radius; y++)
-    {
-        for (int x = -radius; x <= radius; x++)
-        {
-            if (x * x + y * y <= radius * radius)
-            {
-                my_mlx_pixel_put(&data->mlxstruct, cx + x, cy + y, 0x00FF00);
-            }
-        }
-    }
-}
-
-void draw_tile(t_cube *data, int color, int x, int y)
-{
-	int boundx;
-	int boundy;
-	int savex;
-
-	boundx = x + TILE_SIZE;
-	boundy = y + TILE_SIZE;
-	savex = x;
-
-	while (y < boundy)
-	{
-		x = savex;
-		while (x < boundx)
-		{
-			my_mlx_pixel_put(&data->mlxstruct, x, y, color);
-			x++;
-		}
-		y++;
-	}
-}
-
 int rendering(t_cube *data)
 {
-	int i;
-	int j;
-
-	i = 0;
-	while (data->map[i])
-	{
-		j = 0;
-		while (data->map[i][j])
-		{
-			if (data->map[i][j] == '1')
-				draw_tile(data, 0xFFFFFF, j * TILE_SIZE, i * TILE_SIZE);
-			else if (data->map[i][j] == '0')
-				draw_tile(data, 0x000000, j * TILE_SIZE, i * TILE_SIZE);
-			j++;
-		}
-		i++;
-	}
-	draw_filled_circle(data->pixelx, data->pixely, 3, data);
-	// int k  = 0;
-	// while (data->map[k])
-	// {
-	// 	int f = 0;
-	// 	while (data->map[k][f])
-	// 	{
-	// 		if (plrx == f * TILE_SIZE && plry == k * TILE_SIZE)
-
-	// 		f++;
-	// 	}
-	// 	k++;
-	// }
-	mlx_put_image_to_window(data->mlxstruct.mlx, data->mlxstruct.win, data->mlxstruct.img.img, 0, 0);
+	update_player(data);
+    render_frame(data);
 	return (0);
+}
+
+void destroy_all(t_cube *data)
+{
+    if (data->mlxstruct.win)
+		mlx_destroy_window(data->mlxstruct.mlx, data->mlxstruct.win);
+	if (data->mlxstruct.img.img)
+		mlx_destroy_image(data->mlxstruct.mlx, data->mlxstruct.img.img);
+	if (data->mlxstruct.mlx)
+		mlx_destroy_display(data->mlxstruct.mlx);
+	free(data->mlxstruct.mlx);
+    exit(0);
+}
+
+int handle_key_press(int keycode, t_cube *data)
+{
+    if (keycode == 119) // W
+        data->player.move_direction_front = 1;
+    if (keycode == 115) // S
+        data->player.move_direction_front = -1;
+    if (keycode == 97)  // A
+        data->player.move_direction_side = 1;
+    if (keycode == 100) // D
+        data->player.move_direction_side = -1;
+    if (keycode == 65363) // Left Arrow
+        data->player.turn_direction = 1;
+    if (keycode == 65361) // Right Arrow
+        data->player.turn_direction = -1;
+    if (keycode == 65307) // ESC
+        destroy_all(data);
+    return 0;
+}
+
+int handle_key_release(int keycode, t_cube *data)
+{
+    if (keycode == 119 || keycode == 115) data->player.move_direction_front = 0;
+    if (keycode == 97 || keycode == 100)  data->player.move_direction_side = 0;
+    if (keycode == 65363 || keycode == 65361) data->player.turn_direction = 0;
+    return 0;
 }
 
 void render_map(t_mlx *mlxstruct, t_cube *data)
 {
 	mlxstruct->mlx = mlx_init();
-	mlxstruct->win = mlx_new_window(mlxstruct->mlx, data->width * TILE_SIZE, data->height * TILE_SIZE, "cub3D");
-	mlxstruct->img.img = mlx_new_image(mlxstruct->mlx, data->width * TILE_SIZE, data->height * TILE_SIZE);
+	mlxstruct->win = mlx_new_window(mlxstruct->mlx, WIDTH, HEIGHT, "cub3D");
+	mlxstruct->img.img = mlx_new_image(mlxstruct->mlx, WIDTH, HEIGHT);
 	mlxstruct->img.addr = mlx_get_data_addr(mlxstruct->img.img, &mlxstruct->img.bits_per_pixel, &mlxstruct->img.line_length,
 											&mlxstruct->img.endian);
-	mlx_key_hook(mlxstruct->win, handle_keys, data);
+	mlx_hook(mlxstruct->win, 2, 1L<<0, handle_key_press, data);
+	mlx_hook(mlxstruct->win, 3, 1L<<1, handle_key_release, data); 
 	mlx_loop_hook(mlxstruct->mlx, rendering, data);
 	mlx_loop(mlxstruct->mlx);
 }

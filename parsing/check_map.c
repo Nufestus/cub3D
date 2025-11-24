@@ -6,7 +6,7 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:38:33 by aammisse          #+#    #+#             */
-/*   Updated: 2025/11/18 13:56:01 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/11/22 16:04:06 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,36 @@ void set_player(t_cube *data, int i, int j, char **map)
 {
 	data->pixely = calculate_pixel(i) + (TILE_SIZE / 2);
 	data->pixelx = calculate_pixel(j) + (TILE_SIZE / 2);
+	data->player.x = data->pixelx / (double)TILE_SIZE;
+	data->player.y = data->pixely / (double)TILE_SIZE;
+	if (map[i][j] == 'N')
+	{
+		data->player.dirX = 0;
+		data->player.dirY = -1;
+		data->player.planeX = 0.66;
+		data->player.planeY = 0;
+	}
+	else if (map[i][j] == 'S')
+	{
+		data->player.dirX = 0;
+		data->player.dirY = 1;
+		data->player.planeX = -0.66;
+		data->player.planeY = 0;
+	}
+	else if (map[i][j] == 'E')
+	{
+		data->player.dirX = 1;
+		data->player.dirY = 0;
+		data->player.planeX = 0;
+		data->player.planeY = 0.66;
+	}
+	else if (map[i][j] == 'W')
+	{
+		data->player.dirX = -1;
+		data->player.dirY = 0;
+		data->player.planeX = 0;
+		data->player.planeY = -0.66;
+	}
 	map[i][j] = '0';
 }
 
@@ -88,8 +118,6 @@ int check_middle(char **map, t_cube *data)
 	size_t j;
 
 	i = 0;
-	data->width = 0;
-	data->height = 0;
 	while (map[i])
 	{
 		j = 0;
@@ -102,11 +130,8 @@ int check_middle(char **map, t_cube *data)
 			if (strchr("NSEW", map[i][j]))
                 set_player(data, i, j, map);
 			j++;
-			if ((int)j > data->width)
-				data->width = j;
 		}
 		i++;
 	}
-	data->height = i;
 	return (0);
 }
