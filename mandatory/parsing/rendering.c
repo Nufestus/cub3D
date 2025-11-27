@@ -6,16 +6,39 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:41:32 by aammisse          #+#    #+#             */
-/*   Updated: 2025/11/24 14:59:03 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/11/27 17:45:24 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
+void draw_filled_circle(int cx, int cy, int radius, t_cube *data)
+{
+    for (int y = -radius; y <= radius; y++)
+    {
+        for (int x = -radius; x <= radius; x++)
+        {
+            if (x * x + y * y <= radius * radius)
+            {
+                my_mlx_pixel_put(&data->mlxstruct, cx + x, cy + y, 0xFF0000);
+            }
+        }
+    }
+}
+
+int is_player(t_cube *data, int x, int y)
+{
+    if (x == (int)data->player.x && y == (int)data->player.y)
+        return (1);
+    return (0);
+}
+
 int rendering(t_cube *data)
 {
 	update_player(data);
     render_frame(data);
+    mlx_put_image_to_window(data->mlxstruct.mlx, data->mlxstruct.win,
+                            data->mlxstruct.img.img, 0, 0);
 	return (0);
 }
 
@@ -31,21 +54,32 @@ void destroy_all(t_cube *data)
     exit(0);
 }
 
+int is_next_door(t_cube *data)
+{
+    if (data->map[(int)data->player.y + 1][(int)data->player.x] == 'D'
+        || data->map[(int)data->player.y - 1][(int)data->player.x] == 'D'
+        || data->map[(int)data->player.y][(int)data->player.x + 1] == 'D'
+        || data->map[(int)data->player.y][(int)data->player.x - 1] == 'D')
+        return (1);
+    return (0);
+}
+
 int handle_key_press(int keycode, t_cube *data)
 {
-    if (keycode == 119) // W
+    printf("%f / %f\n", data->player.x, data->player.y);
+    if (keycode == 119)
         data->player.move_direction_front = 1;
-    if (keycode == 115) // S
+    if (keycode == 115)
         data->player.move_direction_front = -1;
-    if (keycode == 97)  // A
+    if (keycode == 97)
         data->player.move_direction_side = 1;
-    if (keycode == 100) // D
+    if (keycode == 100)
         data->player.move_direction_side = -1;
-    if (keycode == 65363) // Left Arrow
+    if (keycode == 65363)
         data->player.turn_direction = 1;
-    if (keycode == 65361) // Right Arrow
+    if (keycode == 65361)
         data->player.turn_direction = -1;
-    if (keycode == 65307) // ESC
+    if (keycode == 65307)
         destroy_all(data);
     return 0;
 }
