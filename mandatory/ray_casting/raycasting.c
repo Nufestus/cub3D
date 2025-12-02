@@ -6,7 +6,7 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 10:14:46 by aammisse          #+#    #+#             */
-/*   Updated: 2025/11/25 10:46:33 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/02 13:02:40 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ int collides(t_cube *data, double x, double y)
     if (is_wall(data, x - r, y)) return 1;
     if (is_wall(data, x, y + r)) return 1;
     if (is_wall(data, x, y - r)) return 1;
+    if (is_wall(data, x - r, y - r)) return 1;
+    if (is_wall(data, x + r, y + r)) return 1;
+    if (is_wall(data, x + r, y - r)) return 1;
+    if (is_wall(data, x - r, y + r)) return 1;
 
     return 0;
 }
@@ -113,35 +117,6 @@ void update_player(t_cube *data)
     }
 }
 
-void draw_sky_floor(t_cube *data)
-{
-    int x;
-    int y;
-    
-    y = 0;
-    while (y < HEIGHT / 2)
-    {
-        x = 0;
-        while (x < WIDTH)
-        {
-            my_mlx_pixel_put(&data->mlxstruct, x, y, SKYCOLOR);
-            x++;
-        }
-        y++;
-    }
-    y = HEIGHT / 2;
-    while (y < HEIGHT)
-    {
-        x = 0;
-        while (x < WIDTH)
-        {
-            my_mlx_pixel_put(&data->mlxstruct, x, y, FLOORCOLOR);
-            x++;
-        }
-        y++;
-    }
-}
-
 void initialize_values(int x, t_cube *data)
 {
     double cameraX;
@@ -182,8 +157,6 @@ void calculate_step(t_cube *data)
 
 void dda(t_cube *data)
 {
-    data->ray.deltaDistX = (data->ray.rayDirX == 0.0) ? 1e30 : fabs(1.0 / data->ray.rayDirX);
-    data->ray.deltaDistY = (data->ray.rayDirY == 0.0) ? 1e30 : fabs(1.0 / data->ray.rayDirY);
     while (data->ray.hit == 0)
     {
         if (data->ray.sideDistX < data->ray.sideDistY)
@@ -203,27 +176,125 @@ void dda(t_cube *data)
     }
 }
 
+int create_rgb(t_colors *color)
+{
+    return ((color->r << 16) | (color->g << 8) | (color->b));
+}
+
 void draw_line(int x, t_cube *data)
 {
+    t_img   *tex;
+    int     tex_x;
+    int     tex_y;
+    double  step;
+    double  tex_pos;
     int drawstart;
     int drawend;
-    int lineheight;
-    int color;
+    int  lineheight;
+    int y;
 
+
+    get_tex_info(data, &tex, &tex_x);
     lineheight = HEIGHT / data->ray.perpWallDist;
+    
+    step = ((double)tex->img_height / (double)lineheight);
     drawstart = -lineheight / 2 + HEIGHT / 2;
     if (drawstart < 0)
         drawstart = 0;
     drawend = lineheight / 2 + HEIGHT / 2;
     if (drawend >= HEIGHT)
         drawend = HEIGHT - 1;
-    if (data->ray.side == 0)
-        color = 0x00008B;
-    else
-        color = 0x0000FF;
-    for (int y = drawstart; y < drawend; y++)
+    tex_pos = (drawstart - HEIGHT / 2 + lineheight / 2) * step;
+    y = drawstart;
+    while (y < drawend)
+    {
+        tex_y = (int)tex_pos % tex->img_height;
+        tex_pos += step;
+        int color = get_pixel_color(tex, tex_x, tex_y);
+        double darkness_factor = exp(-data->ray.perpWallDist * 0.4);
+        if (darkness_factor > 1.0)
+            darkness_factor = 1.0;
+        if (darkness_factor < 0.0)
+            darkness_factor = 0.0;
+        int r = ((color >> 16) & 0xFF) * darkness_factor;
+        int g = ((color >> 8) & 0xFF) * darkness_factor;
+        int b = (color & 0xFF) * darkness_factor;
+        color = (r << 16) | (g << 8) | b;
         my_mlx_pixel_put(&data->mlxstruct, x, y, color);
+        y++;
+    }
 }
+
+void draw_floor_and_ceiling(t_cube *cube)
+{
+    int             y;
+    int             x;
+    unsigned int    sky_color;
+
+    sky_color = create_rgb(&cube->texture.sky_color);
+
+    y = HEIGHT / 2 + 1;
+    while (y < HEIGHT)
+    {
+        double rayDirX0 = cube->player.dirX - cube->player.planeX;
+        double rayDirY0 = cube->player.dirY - cube->player.planeY;
+        double rayDirX1 = cube->player.dirX + cube->player.planeX;
+        double rayDirY1 = cube->player.dirY + cube->player.planeY;
+
+        double posZ = (double)HEIGHT / 2.0; 
+        double rowDistance = posZ / ((double)y - (double)HEIGHT / 2.0);
+
+        double floorStepX = rowDistance * (rayDirX1 - rayDirX0) / (double)WIDTH;
+        double floorStepY = rowDistance * (rayDirY1 - rayDirY0) / (double)WIDTH;
+
+        double floorX = cube->player.x + rowDistance * rayDirX0;
+        double floorY = cube->player.y + rowDistance * rayDirY0;
+
+        x = 0;
+        while (x < WIDTH)
+        {
+            floorX += floorStepX;
+            floorY += floorStepY;
+
+            int cellX = (int)floorX;
+            int cellY = (int)floorY;
+
+            int tx = (int)(TEX_SIZE * (floorX - cellX));
+            int ty = (int)(TEX_SIZE * (floorY - cellY));
+
+            if (tx < 0) tx += cube->texture.floor.img_width;
+            if (ty < 0) ty += cube->texture.floor.img_height;
+
+            // Floor pixel
+            unsigned int floor_color = get_pixel_color(&cube->texture.floor, tx, ty);
+
+            // --- Apply torch/darkness effect ---
+            // Exponential darkness based on rowDistance
+            double darkness_factor = exp(-rowDistance * 0.8); // tweak 0.15 for torch radius
+            if (darkness_factor > 1.0) darkness_factor = 1.0;
+            if (darkness_factor < 0.0) darkness_factor = 0.0;
+
+            int r = ((floor_color >> 16) & 0xFF) * darkness_factor;
+            int g = ((floor_color >> 8) & 0xFF) * darkness_factor;
+            int b = (floor_color & 0xFF) * darkness_factor;
+            floor_color = (r << 16) | (g << 8) | b;
+
+            my_mlx_pixel_put(&cube->mlxstruct, x, y, floor_color);
+
+            // Ceiling (mirror) pixel
+            int mirror_y = HEIGHT - y;
+            if (mirror_y >= 0 && mirror_y < HEIGHT / 2)
+            {
+
+                my_mlx_pixel_put(&cube->mlxstruct, x, mirror_y, 0x050505);
+            }
+
+            x++;
+        }
+        y++;
+    }
+}
+
 
 void cast_rays(t_cube *data)
 {
@@ -246,6 +317,5 @@ void cast_rays(t_cube *data)
 
 void render_frame(t_cube *data)
 {
-    draw_sky_floor(data);
     cast_rays(data);
 }

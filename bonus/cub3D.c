@@ -6,7 +6,7 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:58:26 by aammisse          #+#    #+#             */
-/*   Updated: 2025/11/25 16:34:19 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/11/28 17:29:42 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void initialize_player(t_cube *data)
 void initialize_all(t_cube *data)
 {
 	initialize_player(data);
+	// everything else
 }
 
 int	main(int ac, char **av)
@@ -47,7 +48,6 @@ int	main(int ac, char **av)
 	read_from_map(&data);
 	create_map(&data);
 	create_doors(&data);
-	// open files
 	// printmap(&data);
 	render_map(&data.mlxstruct, &data);
 }

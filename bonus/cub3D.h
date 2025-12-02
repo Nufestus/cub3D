@@ -6,7 +6,7 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 18:08:57 by aammisse          #+#    #+#             */
-/*   Updated: 2025/11/27 16:51:28 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/01 18:18:00 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@
 #define S_KEY 115
 #define D_KEY 100
 #define A_KEY 97
-#define SKYCOLOR 0x880000
-#define FLOORCOLOR 0x006400
 
 typedef struct s_door
 {
@@ -64,16 +62,6 @@ typedef struct s_colors
 	int b;
 }				t_colors;
 
-typedef struct	s_texture
-{
-	char *north;
-	char *south;
-	char *west;
-	char *east;
-	t_colors floor_color;
-	t_colors sky_color;
-}				t_texture;
-
 typedef struct	s_img
 {
 	void	*img;
@@ -81,7 +69,24 @@ typedef struct	s_img
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int		img_width;
+	int		img_height;
 }				t_img;
+
+typedef struct    s_texture
+{
+    char *north;
+    char *south;
+    char *west;
+    char *east;
+    t_img    wall_N;
+    t_img    wall_S;
+    t_img    wall_E;
+    t_img    wall_W;
+	t_img	 door;
+    t_colors floor_color;
+    t_colors sky_color;
+}                t_texture;
 
 typedef struct s_mlx
 {
@@ -140,6 +145,10 @@ typedef struct	s_cube
 	t_texture texture;
 }				t_cube;
 
+void init_textures(t_cube *data);
+unsigned int get_pixel_color(t_img *img, int x, int y);
+double	get_wallX(t_cube *data);
+void	get_tex_info(t_cube *data, t_img **tex, int *tex_x);
 void	create_doors(t_cube *data);
 t_door *get_units(t_cube *data, int x, int y);
 void render_map(t_mlx *mlxstruct, t_cube *data);

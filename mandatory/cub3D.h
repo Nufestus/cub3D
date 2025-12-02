@@ -6,7 +6,7 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 18:08:57 by aammisse          #+#    #+#             */
-/*   Updated: 2025/11/24 17:18:49 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/01 13:03:33 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,12 @@
 #include "minilibx-linux/mlx.h"
 
 # define TILE_SIZE 30
-# define PLR_SPEED 0.05
-# define PLR_ROTATE 0.035
+# define PLR_SPEED 0.1
+# define PLR_ROTATE 0.05
 # define HITBOX 0.2
+# define TEX_SIZE 64
+# define SKY_OFFSET 0.25
+# define SKY_SCALE 0.75
 
 # define WIDTH 1024
 # define HEIGHT 720
@@ -39,8 +42,6 @@
 #define S_KEY 115
 #define D_KEY 100
 #define A_KEY 97
-#define SKYCOLOR 0x880000
-#define FLOORCOLOR 0x006400
 
 typedef struct s_map
 {
@@ -55,16 +56,6 @@ typedef struct s_colors
 	int b;
 }				t_colors;
 
-typedef struct	s_texture
-{
-	char *north;
-	char *south;
-	char *west;
-	char *east;
-	t_colors floor_color;
-	t_colors sky_color;
-}				t_texture;
-
 typedef struct	s_img
 {
 	void	*img;
@@ -72,7 +63,25 @@ typedef struct	s_img
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int		img_width;
+	int		img_height;
 }				t_img;
+
+typedef struct    s_texture
+{
+    char *north;
+    char *south;
+    char *west;
+    char *east;
+	t_img	floor;
+	t_img	sky;
+    t_img	wall_N;
+    t_img	wall_S;
+    t_img	wall_E;
+    t_img	wall_W;
+    t_colors floor_color;
+    t_colors sky_color;
+}                t_texture;
 
 typedef struct s_mlx
 {
@@ -126,6 +135,11 @@ typedef struct	s_cube
 	t_texture texture;
 }				t_cube;
 
+void draw_floor_and_ceiling(t_cube *cube);
+void init_textures(t_cube *data);
+unsigned int get_pixel_color(t_img *img, int x, int y);
+double	get_wallX(t_cube *data);
+void	get_tex_info(t_cube *data, t_img **tex, int *tex_x);
 void render_map(t_mlx *mlxstruct, t_cube *data);
 int rendering(t_cube *data);
 void newnode(char *str, t_map **head);

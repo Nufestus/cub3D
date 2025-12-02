@@ -6,7 +6,7 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 10:14:46 by aammisse          #+#    #+#             */
-/*   Updated: 2025/11/25 18:02:40 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/11/30 15:21:34 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ int collides(t_cube *data, double x, double y)
     if (is_wall(data, x - r, y)) return 1;
     if (is_wall(data, x, y + r)) return 1;
     if (is_wall(data, x, y - r)) return 1;
+    if (is_wall(data, x - r, y - r)) return 1;
+    if (is_wall(data, x + r, y + r)) return 1;
+    if (is_wall(data, x + r, y - r)) return 1;
+    if (is_wall(data, x - r, y + r)) return 1;
 
     return 0;
 }
@@ -121,35 +125,6 @@ void update_player(t_cube *data)
     }
 }
 
-void draw_sky_floor(t_cube *data)
-{
-    int x;
-    int y;
-    
-    y = 0;
-    while (y < HEIGHT / 2)
-    {
-        x = 0;
-        while (x < WIDTH)
-        {
-            my_mlx_pixel_put(&data->mlxstruct, x, y, SKYCOLOR);
-            x++;
-        }
-        y++;
-    }
-    y = HEIGHT / 2;
-    while (y < HEIGHT)
-    {
-        x = 0;
-        while (x < WIDTH)
-        {
-            my_mlx_pixel_put(&data->mlxstruct, x, y, FLOORCOLOR);
-            x++;
-        }
-        y++;
-    }
-}
-
 void initialize_values(int x, t_cube *data)
 {
     double cameraX;
@@ -202,8 +177,6 @@ int is_closed(t_cube *data)
 
 void dda(t_cube *data)
 {
-    data->ray.deltaDistX = (data->ray.rayDirX == 0.0) ? 1e30 : fabs(1.0 / data->ray.rayDirX);
-    data->ray.deltaDistY = (data->ray.rayDirY == 0.0) ? 1e30 : fabs(1.0 / data->ray.rayDirY);
     while (data->ray.hit == 0 && data->ray.door == 0)
     {
         if (data->ray.sideDistX < data->ray.sideDistY)
@@ -225,28 +198,50 @@ void dda(t_cube *data)
     }
 }
 
+int create_rgb(t_colors *color)
+{
+    return ((color->r << 16) | (color->g << 8) | (color->b));
+}
+
 void draw_line(int x, t_cube *data)
 {
+    t_img   *tex;
+    int     tex_x;
+    int     tex_y;
+    double  step;
+    double  tex_pos;
     int drawstart;
     int drawend;
-    int lineheight;
-    int color;
+    int  lineheight;
+    int y;
 
+
+    get_tex_info(data, &tex, &tex_x);
     lineheight = HEIGHT / data->ray.perpWallDist;
+    
+    step = ((double)tex->img_height / (double)lineheight);
     drawstart = -lineheight / 2 + HEIGHT / 2;
     if (drawstart < 0)
         drawstart = 0;
     drawend = lineheight / 2 + HEIGHT / 2;
     if (drawend >= HEIGHT)
         drawend = HEIGHT - 1;
-    if (data->ray.side == 0)
-        color = 0x00008B;
-    else
-        color = 0x0000FF;
-    if (data->ray.door == 1)
-        color = 0xFFCCAA;
-    for (int y = drawstart; y < drawend; y++)
-        my_mlx_pixel_put(&data->mlxstruct, x, y, color);
+    tex_pos = (drawstart - HEIGHT / 2 + lineheight / 2) * step;
+    y = 0;
+    while (y < HEIGHT)
+    {
+        if (y >= 0 && y < drawstart)
+            my_mlx_pixel_put(&data->mlxstruct, x, y, create_rgb(&data->texture.sky_color));
+        else if (y >= drawstart && y < drawend)
+        {
+            tex_y = (int)tex_pos % tex->img_height;
+            tex_pos += step;
+            my_mlx_pixel_put(&data->mlxstruct, x, y, get_pixel_color(tex, tex_x, tex_y));
+        }
+        else
+            my_mlx_pixel_put(&data->mlxstruct, x, y, create_rgb(&data->texture.floor_color));
+        y++;
+    }
 }
 
 void cast_rays(t_cube *data)
@@ -270,7 +265,6 @@ void cast_rays(t_cube *data)
 
 void render_frame(t_cube *data)
 {
-    draw_sky_floor(data);
     cast_rays(data);
     mlx_put_image_to_window(data->mlxstruct.mlx, data->mlxstruct.win,
                             data->mlxstruct.img.img, 0, 0);

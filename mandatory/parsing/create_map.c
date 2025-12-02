@@ -6,7 +6,7 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:40:00 by aammisse          #+#    #+#             */
-/*   Updated: 2025/11/20 21:16:54 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/01 12:53:54 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,6 @@ void read_from_map(t_cube *data)
 	}
 }
 
-void printmap(t_cube *data)
-{
-	printf("%s\n", data->texture.west);
-	printf("%s\n", data->texture.south);
-	printf("%s\n", data->texture.north);
-	printf("%s\n", data->texture.east);
-	printf("%d\n", data->texture.floor_color.r);
-	printf("%d\n", data->texture.floor_color.g);
-	printf("%d\n", data->texture.floor_color.b);
-	printf("%d\n", data->texture.sky_color.r);
-	printf("%d\n", data->texture.sky_color.g);
-	printf("%d\n", data->texture.sky_color.b);
-	int i = 0;
-	while (data->map[i])
-		printf("\"%s\"\n", data->map[i++]);
-}
-
 int count_without_space(t_map **ptr)
 {
 	int i;
@@ -102,7 +85,6 @@ void make_map(t_cube *data)
 	data->map = malloc(sizeof(char *) * (len + 1));
 	while (i < len)
 	{
-		// printf("%s", ptr->line);
 		data->map[i] = ft_strtrim(ptr->line, "\n");
 		i++;
 		ptr = ptr->next;

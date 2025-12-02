@@ -6,7 +6,7 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:41:32 by aammisse          #+#    #+#             */
-/*   Updated: 2025/11/27 16:52:27 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/01 12:53:31 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,6 @@ int is_next_door(t_cube *data)
 
 int handle_key_press(int keycode, t_cube *data)
 {
-    printf("%f / %f\n", data->player.x, data->player.y);
     if (keycode == 119)
         data->player.move_direction_front = 1;
     if (keycode == 115)
@@ -232,6 +231,12 @@ int handle_key_press(int keycode, t_cube *data)
     return 0;
 }
 
+int handle_close(t_cube *data)
+{
+    destroy_all(data);
+    return (0);
+}
+
 int handle_key_release(int keycode, t_cube *data)
 {
     if (keycode == 119 || keycode == 115) data->player.move_direction_front = 0;
@@ -243,11 +248,13 @@ int handle_key_release(int keycode, t_cube *data)
 void render_map(t_mlx *mlxstruct, t_cube *data)
 {
 	mlxstruct->mlx = mlx_init();
+    init_textures(data);
 	mlxstruct->win = mlx_new_window(mlxstruct->mlx, WIDTH, HEIGHT, "cub3D");
 	mlxstruct->img.img = mlx_new_image(mlxstruct->mlx, WIDTH, HEIGHT);
 	mlxstruct->img.addr = mlx_get_data_addr(mlxstruct->img.img, &mlxstruct->img.bits_per_pixel, &mlxstruct->img.line_length,
 											&mlxstruct->img.endian);
 	mlx_hook(mlxstruct->win, 2, 1L<<0, handle_key_press, data);
+    mlx_hook(mlxstruct->win, 17, 0, handle_close, data);
 	mlx_hook(mlxstruct->win, 3, 1L<<1, handle_key_release, data); 
 	mlx_loop_hook(mlxstruct->mlx, rendering, data);
 	mlx_loop(mlxstruct->mlx);
