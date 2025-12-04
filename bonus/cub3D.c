@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:58:26 by aammisse          #+#    #+#             */
-/*   Updated: 2025/11/28 17:29:42 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/03 19:33:48 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void initialize_player(t_cube *data)
 void initialize_all(t_cube *data)
 {
 	initialize_player(data);
+	data->anime = 0;
+	data->mouse_x = 0;
 	// everything else
 }
 

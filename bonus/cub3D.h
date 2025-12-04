@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 18:08:57 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/01 18:18:00 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/04 11:36:00 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define PLR_SPEED 0.05
 # define PLR_ROTATE 0.035
 # define HITBOX 0.2
+# define TEX_SIZE 64
 
 # define WIDTH 1024
 # define HEIGHT 720
@@ -73,12 +74,21 @@ typedef struct	s_img
 	int		img_height;
 }				t_img;
 
+typedef struct s_torch
+{
+	t_img	torch[8];
+	int current_frame;
+	int timer;
+}	t_torch;
+
 typedef struct    s_texture
 {
     char *north;
     char *south;
     char *west;
     char *east;
+	t_torch sprite;
+	t_img	floor;
     t_img    wall_N;
     t_img    wall_S;
     t_img    wall_E;
@@ -137,6 +147,8 @@ typedef struct	s_cube
 	int map_fd;
 	char *map_file;
 	char **map;
+	int anime;
+	int mouse_x;
 	t_ray ray;
 	t_door *doors;
 	t_player player;
@@ -193,5 +205,8 @@ void render_frame(t_cube *data);
 int is_closed(t_cube *data);
 t_door *get_units(t_cube *data, int x, int y);
 int is_door_closed(t_cube *data, double x, double y);
+
+int	mouse_move(int x, int y, t_cube *data);
+void draw_floor_and_ceiling(t_cube *cube);
 
 #endif

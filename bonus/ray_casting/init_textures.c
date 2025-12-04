@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 17:25:52 by mouerchi          #+#    #+#             */
-/*   Updated: 2025/12/01 18:15:26 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/04 11:37:50 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@ void init_textures(t_cube *data)
 	load_textures(data, &data->texture.wall_W, data->texture.west);
 	load_textures(data, &data->texture.wall_E, data->texture.east);
 	load_textures(data, &data->texture.door, "./textures/door.xpm");
+	load_textures(data, &data->texture.floor, "./textures/floor.xpm");
+	load_textures(data, &data->texture.sprite.torch[0], "./textures/0.xpm");
+	load_textures(data, &data->texture.sprite.torch[1], "./textures/1.xpm");
+	load_textures(data, &data->texture.sprite.torch[2], "./textures/2.xpm");
+	load_textures(data, &data->texture.sprite.torch[3], "./textures/3.xpm");
+	load_textures(data, &data->texture.sprite.torch[4], "./textures/4.xpm");
+	load_textures(data, &data->texture.sprite.torch[5], "./textures/5.xpm");
+	load_textures(data, &data->texture.sprite.torch[6], "./textures/6.xpm");
+	load_textures(data, &data->texture.sprite.torch[7], "./textures/7.xpm");
+	data->texture.sprite.current_frame = 0;
+	data->texture.sprite.timer = 0;
 }
 
 unsigned int get_pixel_color(t_img *img, int x, int y)
