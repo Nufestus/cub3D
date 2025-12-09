@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 17:25:52 by mouerchi          #+#    #+#             */
-/*   Updated: 2025/12/01 12:14:43 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/05 11:36:40 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ static void load_textures(t_cube *data, t_img *img, char *path)
 	if (!img->img)
     {
         printf("Error\nTexture loading failed for path: |%s|\n", path);
-        // Clean exit or return
-        exit(1); 
+        destroy_all(data);
     }
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
 }

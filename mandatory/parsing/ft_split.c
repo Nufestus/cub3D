@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:34:12 by aammisse          #+#    #+#             */
-/*   Updated: 2025/11/18 09:34:24 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/09 13:36:01 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
-static size_t count_words(char *s, char c)
+static size_t	count_words(char *s, char c)
 {
-	unsigned int i;
-	size_t word;
+	unsigned int	i;
+	size_t			word;
 
 	i = 0;
 	word = 0;
@@ -28,9 +28,9 @@ static size_t count_words(char *s, char c)
 	return (word);
 }
 
-static size_t str_length(char const *s, char c)
+static size_t	str_length(char const *s, char c)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (s[i] && s[i] != c)
@@ -38,9 +38,9 @@ static size_t str_length(char const *s, char c)
 	return (i);
 }
 
-static char **free_mem(char **s, int i)
+static char	**free_mem(char **s, int i)
 {
-	int index;
+	int	index;
 
 	index = 0;
 	while (index < i)
@@ -52,11 +52,11 @@ static char **free_mem(char **s, int i)
 	return (NULL);
 }
 
-char **ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
-	size_t k;
-	size_t index;
-	char **p;
+	size_t	k;
+	size_t	index;
+	char	**p;
 
 	if (!s)
 		return (NULL);
@@ -78,4 +78,26 @@ char **ft_split(char const *s, char c)
 	}
 	p[index] = NULL;
 	return (p);
+}
+
+char	*ft_strdup(const char *s)
+{
+	size_t	len;
+	size_t	i;
+	char	*dup;
+
+	i = 0;
+	if (!s)
+		return (NULL);
+	len = ft_strlen(s);
+	dup = malloc(len + 1);
+	if (!dup)
+		return (NULL);
+	while (i < len)
+	{
+		dup[i] = s[i];
+		i++;
+	}
+	dup[len] = '\0';
+	return (dup);
 }

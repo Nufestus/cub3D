@@ -6,7 +6,7 @@
 /*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 18:08:57 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/02 14:28:55 by mouerchi         ###   ########.fr       */
+/*   Updated: 2025/12/09 13:56:53 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 #include "minilibx-linux/mlx.h"
 
 # define TILE_SIZE 30
-# define PLR_SPEED 0.1
+# define PLR_SPEED 0.05
 # define PLR_ROTATE 0.05
 # define HITBOX 0.2
 # define TEX_SIZE 64
@@ -157,7 +157,7 @@ char **ft_split(char const *s, char c);
 size_t ft_strlcpy(char *dst, const char *src, size_t dstsize);
 int ft_strncmp(const char *s1, const char *s2, size_t n);
 int ft_atoi(const char *str);
-int openmap(char *str);
+int openmap(t_cube *data);
 void create_map(t_cube *data);
 int check_player(char **map);
 int parse_map(t_cube *data);
@@ -169,7 +169,7 @@ void make_map(t_cube *data);
 int parse_colors(char *str);
 t_colors handle_colors(char *str, t_cube *data);
 int check_ext(char *str);
-char *handle_texture(char *str);
+char *handle_texture(char *str, t_cube *data);
 void handle_directions(char *str, t_cube *data, int *count);
 int check_middle(char **map, t_cube *data);
 void set_player(t_cube *data, int i, int j, char **map);
@@ -179,5 +179,15 @@ int check_top_bot(char **map);
 int check_newline(char **map);
 void update_player(t_cube *data);
 void render_frame(t_cube *data);
-
+void	free_all(t_cube *data);
+void	free_textures(t_cube *data);
+void	free_lst(t_map *head);
+char	*ft_strdup(const char *s);
+char *ft_strtrim(const char *s1, const char *set);
+void gnl_free(int fd);
+int	ft_isalpha(char c);
+void	destroy_all(t_cube *data);
+int	check_digits(char *str, int *i, int *count);
+int	check_count(char *str, int *i, int *count);
+int	check_ext(char *str);
 #endif

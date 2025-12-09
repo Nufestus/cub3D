@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:58:26 by aammisse          #+#    #+#             */
-/*   Updated: 2025/11/23 16:07:18 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/09 12:48:33 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,42 @@ void initialize_player(t_cube *data)
     data->player.turn_direction = 0;
 }
 
-void initialize_all(t_cube *data)
+
+void	initialize_img(t_img *img)
 {
+	img->img = NULL;
+	img->addr = NULL;
+	img->img_width = 0;
+	img->img_height = 0;
+}
+
+void initialize_texture(t_cube *data)
+{
+	data->texture.north = NULL;
+	data->texture.south = NULL;
+	data->texture.east = NULL;
+	data->texture.west = NULL;
+	initialize_img(&data->texture.wall_N);
+	initialize_img(&data->texture.wall_S);
+	initialize_img(&data->texture.wall_E);
+	initialize_img(&data->texture.wall_W);
+	initialize_img(&data->texture.floor);
+	initialize_img(&data->texture.sky);
+}
+
+void initialize_all(t_cube *data, char *file)
+{
+	data->map_file = NULL;
+	data->map = NULL;
+	data->list_map = NULL;
+	data->map_fd = -1;
+	data->mlxstruct.mlx = NULL;
+	data->mlxstruct.win = NULL;
+	data->map_file = ft_strdup(file);
+	data->map_fd = openmap(data);
+	initialize_img(&data->mlxstruct.img);
 	initialize_player(data);
+	initialize_texture(data);
 }
 
 int	main(int ac, char **av)
@@ -39,14 +72,8 @@ int	main(int ac, char **av)
 		write(2, "Invalid File Map!\n", 19);
 		return (1);
 	}
-	initialize_all(&data);
-	data.map_file = ft_strdup(av[1]);
-	data.map_fd = openmap(av[1]);
-	data.list_map = NULL;
-	data.map = NULL;
+	initialize_all(&data, av[1]);
 	read_from_map(&data);
 	create_map(&data);
-	// open files
-	// printmap(&data);
 	render_map(&data.mlxstruct, &data);
 }
