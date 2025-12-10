@@ -6,7 +6,7 @@
 /*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:42:16 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/09 13:58:59 by mouerchi         ###   ########.fr       */
+/*   Updated: 2025/12/09 18:07:13 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,10 @@ void	safe_destroy(void *mlx, t_img *img)
 
 void	destroy_all(t_cube *data)
 {
-	safe_destroy(data->mlxstruct.mlx, &data->texture.wall_N);
-	safe_destroy(data->mlxstruct.mlx, &data->texture.wall_S);
-	safe_destroy(data->mlxstruct.mlx, &data->texture.wall_E);
-	safe_destroy(data->mlxstruct.mlx, &data->texture.wall_W);
-	safe_destroy(data->mlxstruct.mlx, &data->texture.floor);
-	safe_destroy(data->mlxstruct.mlx, &data->texture.sky);
+	safe_destroy(data->mlxstruct.mlx, &data->texture.wall_n);
+	safe_destroy(data->mlxstruct.mlx, &data->texture.wall_s);
+	safe_destroy(data->mlxstruct.mlx, &data->texture.wall_e);
+	safe_destroy(data->mlxstruct.mlx, &data->texture.wall_w);
 	safe_destroy(data->mlxstruct.mlx, &data->mlxstruct.img);
 	if (data->mlxstruct.win)
 		mlx_destroy_window(data->mlxstruct.mlx, data->mlxstruct.win);

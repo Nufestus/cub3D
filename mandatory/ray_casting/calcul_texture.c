@@ -3,48 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   calcul_texture.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 09:36:07 by mouerchi          #+#    #+#             */
-/*   Updated: 2025/11/30 15:48:56 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/09 17:50:47 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
-double	get_wallX(t_cube *data)
+double	get_wallx(t_cube *data)
 {
-	double wallX;
+	double	wall_x;
 
 	if (data->ray.side == 0)
-		wallX = data->player.y + (data->ray.perpWallDist * data->ray.rayDirY);
+		wall_x = data->player.y + (data->ray.perpwalldist * data->ray.raydir_y);
 	else
-		wallX = data->player.x + (data->ray.perpWallDist * data->ray.rayDirX);
-	wallX -= floor(wallX);
-	return (wallX);
+		wall_x = data->player.x + (data->ray.perpwalldist * data->ray.raydir_x);
+	wall_x -= floor(wall_x);
+	return (wall_x);
 }
 
 void	get_tex_info(t_cube *data, t_img **tex, int *tex_x)
 {
-	double wallX;
+	double	wall_x;
 
 	if (data->ray.side == 0)
 	{
-		if (data->ray.rayDirX > 0)
-			*tex = &data->texture.wall_E;
+		if (data->ray.raydir_x > 0)
+			*tex = &data->texture.wall_e;
 		else
-			*tex = &data->texture.wall_W;
+			*tex = &data->texture.wall_w;
 	}
 	else
 	{
-		if (data->ray.rayDirY > 0)
-			*tex = &data->texture.wall_S;
+		if (data->ray.raydir_y > 0)
+			*tex = &data->texture.wall_s;
 		else
-			*tex = &data->texture.wall_N;
+			*tex = &data->texture.wall_n;
 	}
-	wallX = get_wallX(data);
-	*tex_x = (int)(wallX * (double)(*tex)->img_width);
-	if ((data->ray.side == 0 && data->ray.rayDirX > 0) ||
-			(data->ray.side == 1 && data->ray.rayDirY < 0))
-			*tex_x = (*tex)->img_width - *tex_x - 1;
+	wall_x = get_wallx(data);
+	*tex_x = (int)(wall_x * (double)(*tex)->img_width);
 }

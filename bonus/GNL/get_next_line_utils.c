@@ -3,110 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/22 22:22:11 by aammisse          #+#    #+#             */
-/*   Updated: 2025/07/06 14:20:20 by aammisse         ###   ########.fr       */
+/*   Created: 2024/11/17 14:33:33 by mouerchi          #+#    #+#             */
+/*   Updated: 2025/12/04 15:25:21 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
 	i = 0;
-	if (!str)
-		return (0);
-	while (str && str[i])
+	while (s[i])
 		i++;
 	return (i);
 }
 
-char	*ft_calloc(size_t num, size_t size)
+char	*ft_strchr(char *s, int c)
 {
-	char		*ptr;
-	size_t		i;
-
-	i = 0;
-	if (num && size > LONG_MAX / num)
-		return (NULL);
-	ptr = malloc(num * size);
-	if (!ptr)
-		return (NULL);
-	while (i < size)
-	{
-		ptr[i] = 0;
-		i++;
-	}
-	return (ptr);
-}
-
-char	*ft_strdup(const char *s)
-{
-	size_t		len;
-	size_t		i;
-	char		*dup;
-
-	i = 0;
 	if (!s)
 		return (NULL);
-	len = ft_strlen(s);
-	dup = malloc(len + 1);
-	if (!dup)
-		return (NULL);
-	while (i < len)
+	while (*s)
 	{
-		dup[i] = s[i];
-		i++;
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
 	}
-	dup[len] = '\0';
-	return (dup);
+	if ((char)c == '\0')
+		return ((char *)s);
+	return (NULL);
 }
 
-char	*customstrlcat(char *joined, char *s1, const char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
+	char	*str;
 	size_t	i;
-	size_t	len1;
-	size_t	len2;
+	size_t	j;
 
-	i = 0;
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	while (i < len1)
-	{
-		joined[i] = s1[i];
-		i++;
-	}
-	i = 0;
-	while (i < len2)
-	{
-		joined[len1 + i] = s2[i];
-		i++;
-	}
-	return (joined);
-}
-
-char	*ft_strjoin(char *s1, const char *s2)
-{
-	size_t	len1;
-	size_t	len2;
-	char	*joined;
-
-	if (!s1 && !s2)
+	if (!s2)
 		return (NULL);
 	if (!s1)
-		return (ft_strdup(s2));
-	if (!s2)
-		return (ft_strdup(s1));
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	joined = ft_calloc(len1 + len2 + 1, 1);
-	if (!joined)
-		return (NULL);
-	joined = customstrlcat(joined, s1, s2);
-	joined[len1 + len2] = '\0';
+	{
+		s1 = malloc(sizeof(char) * 1);
+		if (!s1)
+			return (NULL);
+		s1[0] = '\0';
+	}
+	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!str)
+		return (free(s1), NULL);
+	i = -1;
+	j = 0;
+	while (s1[++i])
+		str[i] = s1[i];
+	while (s2[j])
+		str[i++] = s2[j++];
+	str[ft_strlen(s1) + ft_strlen(s2)] = '\0';
 	free(s1);
-	return (joined);
+	return (str);
 }

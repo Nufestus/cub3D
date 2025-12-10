@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:39:18 by aammisse          #+#    #+#             */
-/*   Updated: 2025/11/18 13:53:05 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/09 16:23:51 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
-char *ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t i;
-	char *str;
-	char *substr;
+	size_t	i;
+	char	*str;
+	char	*substr;
 
 	if (!s)
 		return (NULL);
@@ -40,14 +40,21 @@ char *ft_substr(char const *s, unsigned int start, size_t len)
 	return (substr);
 }
 
-void free_double_array(char **s)
+int	lengthcalc(size_t a, char *string)
 {
-	char **l = s;
+	if (a > ft_strlen(string) - 1)
+		return (1);
+	return (0);
+}
 
-	while (*s)
-	{
-		free(*s);
-		s++;
-	}
-	free(l);
+void	destroy_all(t_cube *data)
+{
+	if (data->mlxstruct.win)
+		mlx_destroy_window(data->mlxstruct.mlx, data->mlxstruct.win);
+	if (data->mlxstruct.img.img)
+		mlx_destroy_image(data->mlxstruct.mlx, data->mlxstruct.img.img);
+	if (data->mlxstruct.mlx)
+		mlx_destroy_display(data->mlxstruct.mlx);
+	free(data->mlxstruct.mlx);
+	exit(0);
 }

@@ -6,25 +6,24 @@
 /*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:58:26 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/09 12:48:33 by mouerchi         ###   ########.fr       */
+/*   Updated: 2025/12/09 18:15:27 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void initialize_player(t_cube *data)
+void	initialize_player(t_cube *data)
 {
 	data->player.x = 0;
 	data->player.y = 0;
-	data->player.dirX = 0;
-	data->player.dirY = 0;
-	data->player.planeX = 0;
-	data->player.planeY = 0;
-    data->player.move_direction_front = 0;
-    data->player.move_direction_side = 0;
-    data->player.turn_direction = 0;
+	data->player.dir_x = 0;
+	data->player.dir_y = 0;
+	data->player.plane_x = 0;
+	data->player.plane_y = 0;
+	data->player.move_direction_front = 0;
+	data->player.move_direction_side = 0;
+	data->player.turn_direction = 0;
 }
-
 
 void	initialize_img(t_img *img)
 {
@@ -34,21 +33,19 @@ void	initialize_img(t_img *img)
 	img->img_height = 0;
 }
 
-void initialize_texture(t_cube *data)
+void	initialize_texture(t_cube *data)
 {
 	data->texture.north = NULL;
 	data->texture.south = NULL;
 	data->texture.east = NULL;
 	data->texture.west = NULL;
-	initialize_img(&data->texture.wall_N);
-	initialize_img(&data->texture.wall_S);
-	initialize_img(&data->texture.wall_E);
-	initialize_img(&data->texture.wall_W);
-	initialize_img(&data->texture.floor);
-	initialize_img(&data->texture.sky);
+	initialize_img(&data->texture.wall_n);
+	initialize_img(&data->texture.wall_s);
+	initialize_img(&data->texture.wall_e);
+	initialize_img(&data->texture.wall_w);
 }
 
-void initialize_all(t_cube *data, char *file)
+void	initialize_all(t_cube *data, char *file)
 {
 	data->map_file = NULL;
 	data->map = NULL;

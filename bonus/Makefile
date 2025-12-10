@@ -6,7 +6,7 @@
 #    By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/05 17:56:35 by aammisse          #+#    #+#              #
-#    Updated: 2025/12/04 11:27:43 by mouerchi         ###   ########.fr        #
+#    Updated: 2025/12/09 17:08:07 by mouerchi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,15 @@ NAME = cub3D
 
 CC = cc
 
-FLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+FLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
 
 SRCS = parsing/colors_directions.c GNL/get_next_line.c GNL/get_next_line_utils.c \
 		cub3D.c parsing/check_map.c parsing/create_map.c parsing/create_player.c \
 		parsing/ft_atoi.c parsing/ft_split.c parsing/ft_strtrim.c parsing/ft_substr.c \
 		parsing/keys_map.c parsing/list_functions.c parsing/rendering.c ray_casting/raycasting.c \
-		ray_casting/calcul_texture.c ray_casting/init_textures.c
+		ray_casting/calcul_texture.c ray_casting/init_textures.c parsing/memory.c parsing/player_utils.c \
+		parsing/colors_utils.c parsing/create_door.c ray_casting/dda_algorithm.c ray_casting/raycast_help.c \
+		ray_casting/raycast_utils.c parsing/door_utils.c parsing/minimap.c ray_casting/sprite.c
 
 OBJS = ${SRCS:.c=.o}
 

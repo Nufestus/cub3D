@@ -6,7 +6,7 @@
 /*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:41:32 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/09 14:03:47 by mouerchi         ###   ########.fr       */
+/*   Updated: 2025/12/09 18:07:35 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 int	rendering(t_cube *data)
 {
 	update_player(data);
-	draw_floor_and_ceiling(data);
-	render_frame(data);
+	cast_rays(data);
 	mlx_put_image_to_window(data->mlxstruct.mlx, data->mlxstruct.win,
 		data->mlxstruct.img.img, 0, 0);
 	return (0);

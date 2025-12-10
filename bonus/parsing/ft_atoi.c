@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:34:54 by aammisse          #+#    #+#             */
-/*   Updated: 2025/11/18 13:53:50 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/09 15:15:10 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
-size_t ft_strlcpy(char *dst, const char *src, size_t dstsize)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	size_t i;
-	size_t len;
+	size_t	i;
+	size_t	len;
 
 	i = 0;
 	len = 0;
@@ -33,7 +33,7 @@ size_t ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	return (len);
 }
 
-static int handle(unsigned char c, unsigned char b)
+static int	handle(unsigned char c, unsigned char b)
 {
 	if (c - b > 0)
 		return (1);
@@ -42,11 +42,11 @@ static int handle(unsigned char c, unsigned char b)
 	return (0);
 }
 
-int ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	size_t i;
-	unsigned char *str1;
-	unsigned char *str2;
+	size_t			i;
+	unsigned char	*str1;
+	unsigned char	*str2;
 
 	i = 0;
 	str1 = (unsigned char *)s1;
@@ -60,7 +60,7 @@ int ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
-static int check_sign(int sign)
+static int	check_sign(int sign)
 {
 	if (sign < 0)
 		return (0);
@@ -68,12 +68,12 @@ static int check_sign(int sign)
 		return (-1);
 }
 
-int ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
-	long long result;
-	long long old_result;
-	int sign;
-	int i;
+	long long	result;
+	long long	old_result;
+	int			sign;
+	int			i;
 
 	result = 0;
 	sign = 1;

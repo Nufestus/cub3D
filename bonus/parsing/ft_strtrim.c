@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:37:46 by aammisse          #+#    #+#             */
-/*   Updated: 2025/11/18 13:53:19 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/09 15:17:14 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
-static char *alloc(char *str)
+static char	*alloc(char *str)
 {
-	int i;
-	char *string;
+	int		i;
+	char	*string;
 
 	i = 0;
 	string = (char *)malloc(ft_strlen(str) + 1);
@@ -30,9 +30,9 @@ static char *alloc(char *str)
 	return (string);
 }
 
-static int in_set(char c, char *set)
+static int	in_set(char c, char *set)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (set[i] != '\0')
@@ -44,11 +44,11 @@ static int in_set(char c, char *set)
 	return (0);
 }
 
-char *ft_strtrim(const char *s1, const char *set)
+char	*ft_strtrim(const char *s1, const char *set)
 {
-	size_t startind;
-	size_t lastind;
-	char *trim;
+	size_t	startind;
+	size_t	lastind;
+	char	*trim;
 
 	if (s1 != NULL && set == NULL)
 		return (alloc((char *)s1));
