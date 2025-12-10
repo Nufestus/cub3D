@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   colors_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 13:21:58 by mouerchi          #+#    #+#             */
-/*   Updated: 2025/12/09 13:23:24 by mouerchi         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:36:59 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+int	ft_isdigit(int c)
+{
+	return (c >= '0' && c <= '9');
+}
 
 int	check_digits(char *str, int *i, int *count)
 {
@@ -19,7 +34,7 @@ int	check_digits(char *str, int *i, int *count)
 
 	num = 0;
 	digits_found = 0;
-	while (str[(*i)] && isdigit(str[(*i)]))
+	while (str[(*i)] && ft_isdigit(str[(*i)]))
 	{
 		num = num * 10 + (str[(*i)] - '0');
 		digits_found++;
@@ -59,7 +74,7 @@ int	check_ext(char *str)
 		str += i;
 		str -= 4;
 	}
-	if (!strcmp(str, ".xpm") && i > 4)
+	if (!ft_strcmp(str, ".xpm") && i > 4)
 		return (1);
 	return (0);
 }

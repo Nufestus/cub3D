@@ -6,7 +6,7 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 17:04:23 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/09 17:04:32 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:18:20 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,9 @@ void	sprite_animation(t_cube *data)
 			data->anime = 0;
 		}
 	}
+}
+
+int	create_rgb(t_colors *color)
+{
+	return ((color->r << 16) | (color->g << 8) | (color->b));
 }

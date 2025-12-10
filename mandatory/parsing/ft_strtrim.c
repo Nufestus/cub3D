@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:37:46 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/09 13:37:01 by mouerchi         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:22:03 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,27 @@ char	*ft_strtrim(const char *s1, const char *set)
 		return (NULL);
 	ft_strlcpy(trim, s1 + startind, lastind - startind + 2);
 	return (trim);
+}
+
+int	get_map_height(char **map)
+{
+	int	i;
+
+	i = 0;
+	while (map[i])
+		i++;
+	return (i);
+}
+
+void	get_map_dimensions(t_cube *data)
+{
+	int	i;
+
+	i = 0;
+	data->dimensions = make_array(data);
+	while (data->map[i])
+	{
+		data->dimensions[i] = ft_strlen(data->map[i]);
+		i++;
+	}
 }

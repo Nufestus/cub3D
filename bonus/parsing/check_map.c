@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:38:33 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/09 14:57:13 by mouerchi         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:27:32 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,17 @@ static int	check_cells(char **map, t_cube *data, size_t i, size_t j)
 {
 	if (!ft_strchr("01NSEWD 	", map[i][j]))
 		return (1);
-	if ((map[i][j] == '0' || strchr("NSEWD", map[i][j])) &&
+	if ((map[i][j] == '0' || ft_strchr("NSEWD", map[i][j])) &&
 		((map[i][j + 1] && map[i][j + 1] == ' ') ||
 		(j > 0 && map[i][j - 1] && map[i][j - 1] == ' ')))
 		return (1);
-	else if ((map[i][j] == '0' || strchr("NSEWD", map[i][j])) &&
+	else if ((map[i][j] == '0' || ft_strchr("NSEWD", map[i][j])) &&
 		(((lengthcalc(j, map[i + 1])) ||
 		(i > 0 && lengthcalc(j, map[i - 1]))) ||
 		(i > 0 && map[i - 1][j] == ' ') ||
 		(map[i + 1] && map[i + 1][j] == ' ')))
 		return (1);
-	if (strchr("NSEW", map[i][j]))
+	if (ft_strchr("NSEW", map[i][j]))
 		set_player(data, i, j, map);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:41:32 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/09 16:29:34 by mouerchi         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:19:47 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	handle_key_release(int keycode, t_cube *data)
 
 void	render_map(t_mlx *mlxstruct, t_cube *data)
 {
+	get_map_dimensions(data);
 	mlxstruct->mlx = mlx_init();
 	init_textures(data);
 	mlxstruct->win = mlx_new_window(mlxstruct->mlx, WIDTH, HEIGHT, "cub3D");

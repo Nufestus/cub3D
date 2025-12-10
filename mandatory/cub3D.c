@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:58:26 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/09 18:15:27 by mouerchi         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:38:56 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,13 @@ void	initialize_all(t_cube *data, char *file)
 	data->map_fd = -1;
 	data->mlxstruct.mlx = NULL;
 	data->mlxstruct.win = NULL;
+	data->dimensions = NULL;
 	data->map_file = ft_strdup(file);
 	data->map_fd = openmap(data);
+	if (PLR_SPEED > 1)
+		data->player.speed = 0.07;
+	else
+		data->player.speed = PLR_SPEED;
 	initialize_img(&data->mlxstruct.img);
 	initialize_player(data);
 	initialize_texture(data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 08:28:15 by mouerchi          #+#    #+#             */
-/*   Updated: 2025/12/09 15:23:36 by mouerchi         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:38:31 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	free_double_array(char **s)
 
 void	free_all(t_cube *data)
 {
+	if (data->dimensions)
+		free(data->dimensions);
 	if (data->map_file)
 		free(data->map_file);
 	if (data->doors)

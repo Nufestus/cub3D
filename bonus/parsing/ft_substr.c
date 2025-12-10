@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:39:18 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/09 16:23:51 by mouerchi         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:19:16 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,28 @@ void	destroy_all(t_cube *data)
 		mlx_destroy_display(data->mlxstruct.mlx);
 	free(data->mlxstruct.mlx);
 	exit(0);
+}
+
+int	*make_array(t_cube *data)
+{
+	int	i;
+	int	*array;
+
+	i = 0;
+	while (data->map[i])
+		i++;
+	array = malloc(sizeof(int) * i);
+	if (!array)
+		free_all(data);
+	return (array);
+}
+
+int	get_map_height(char **map)
+{
+	int	i;
+
+	i = 0;
+	while (map[i])
+		i++;
+	return (i);
 }

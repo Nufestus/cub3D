@@ -3,43 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 13:55:36 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/09 17:40:52 by mouerchi         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:09:56 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
-void	move_back(t_cube *data, double *newX, double *newY)
+void	move_back(t_cube *data, double newX, double newY)
 {
-	*newX = data->player.x - data->player.dir_x * PLR_SPEED;
-	if (!collides(data, *newX, data->player.y))
-		data->player.x = *newX;
-	*newY = data->player.y - data->player.dir_y * PLR_SPEED;
-	if (!collides(data, data->player.x, *newY))
-		data->player.y = *newY;
+	newX = data->player.x - data->player.dir_x * data->player.speed;
+	newY = data->player.y - data->player.dir_y * data->player.speed;
+	if (!collides(data, newX, data->player.y)
+		&& !collides(data, data->player.x, newY))
+	{
+		data->player.x = newX;
+		data->player.y = newY;
+	}
 }
 
-void	move_right(t_cube *data, double *newX, double *newY)
+void	move_right(t_cube *data, double newX, double newY)
 {
-	*newX = data->player.x + data->player.dir_y * PLR_SPEED;
-	if (!collides(data, *newX, data->player.y))
-		data->player.x = *newX;
-	*newY = data->player.y - data->player.dir_x * PLR_SPEED;
-	if (!collides(data, data->player.x, *newY))
-		data->player.y = *newY;
+	newX = data->player.x + data->player.dir_y * data->player.speed;
+	newY = data->player.y - data->player.dir_x * data->player.speed;
+	if (!collides(data, newX, data->player.y)
+		&& !collides(data, data->player.x, newY))
+	{
+		data->player.x = newX;
+		data->player.y = newY;
+	}
 }
 
-void	move_left(t_cube *data, double *newX, double *newY)
+void	move_left(t_cube *data, double newX, double newY)
 {
-	*newX = data->player.x - data->player.dir_y * PLR_SPEED;
-	if (!collides(data, *newX, data->player.y))
-		data->player.x = *newX;
-	*newY = data->player.y + data->player.dir_x * PLR_SPEED;
-	if (!collides(data, data->player.x, *newY))
-		data->player.y = *newY;
+	newX = data->player.x - data->player.dir_y * data->player.speed;
+	newY = data->player.y + data->player.dir_x * data->player.speed;
+	if (!collides(data, newX, data->player.y)
+		&& !collides(data, data->player.x, newY))
+	{
+		data->player.x = newX;
+		data->player.y = newY;
+	}
 }
 
 void	rotate_left(t_cube *data)

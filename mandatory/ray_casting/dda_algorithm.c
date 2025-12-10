@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda_algorithm.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 13:57:36 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/09 17:52:14 by mouerchi         ###   ########.fr       */
+/*   Updated: 2025/12/10 14:51:20 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	initialize_values(int x, t_cube *data)
 	data->ray.deltadist_x = fabs(1 / data->ray.raydir_x);
 	data->ray.deltadist_y = fabs(1 / data->ray.raydir_y);
 	data->ray.hit = 0;
-	data->ray.door = 0;
 }
 
 void	calculate_step(t_cube *data)
@@ -57,7 +56,7 @@ void	calculate_step(t_cube *data)
 
 void	dda(t_cube *data)
 {
-	while (data->ray.hit == 0 && data->ray.door == 0)
+	while (data->ray.hit == 0)
 	{
 		if (data->ray.sidedist_x < data->ray.sidedist_y)
 		{
@@ -71,7 +70,7 @@ void	dda(t_cube *data)
 			data->ray.sidedist_y += data->ray.deltadist_y;
 			data->ray.side = 1;
 		}
-		if (data->map[data->ray.map_y][data->ray.map_x] == '1')
+		if (is_wall(data, data->ray.map_x, data->ray.map_y))
 			data->ray.hit = 1;
 	}
 }

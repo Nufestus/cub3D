@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   create_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:40:00 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/09 15:10:28 by mouerchi         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:28:46 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
 
 int	check_space(char *str)
 {
@@ -43,7 +53,7 @@ void	read_from_map(t_cube *data)
 			handle_directions(line, data, &count);
 		else if (count == 6)
 			newnode(line, &data->list_map);
-		if (strcmp(line, "\n") && check_space(line))
+		if (ft_strcmp(line, "\n") && check_space(line))
 			linecount++;
 		free(line);
 		line = get_next_line(data->map_fd);

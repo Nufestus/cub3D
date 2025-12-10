@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:40:00 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/09 13:32:24 by mouerchi         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:35:47 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	read_from_map(t_cube *data)
 			handle_directions(line, data, &count);
 		else if (count == 6)
 			newnode(line, &data->list_map);
-		if (strcmp(line, "\n") && check_space(line))
+		if (ft_strcmp(line, "\n") && check_space(line))
 			linecount++;
 		free(line);
 		line = get_next_line(data->map_fd);

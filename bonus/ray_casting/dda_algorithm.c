@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda_algorithm.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 13:57:36 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/09 17:39:21 by mouerchi         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:16:23 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,14 @@ void	dda(t_cube *data)
 			data->ray.sidedist_y += data->ray.deltadist_y;
 			data->ray.side = 1;
 		}
-		if (data->map[data->ray.map_y][data->ray.map_x] == '1')
+		if (is_wall(data, data->ray.map_x, data->ray.map_y))
 			data->ray.hit = 1;
-		else if (data->map[data->ray.map_y][data->ray.map_x] == 'D'
+		if (data->map[data->ray.map_y][data->ray.map_x] == 'D'
 				&& is_closed(data))
+		{
 			data->ray.door = 1;
+			data->ray.hit = 0;
+		}
 	}
 }
 

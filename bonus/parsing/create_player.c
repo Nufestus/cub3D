@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_player.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:40:31 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/09 15:14:02 by mouerchi         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:28:56 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	check_player(char **map)
 		j = 0;
 		while (map[i][j])
 		{
-			if (strchr("NSEW", map[i][j]))
+			if (ft_strchr("NSEW", map[i][j]))
 				count++;
 			j++;
 		}

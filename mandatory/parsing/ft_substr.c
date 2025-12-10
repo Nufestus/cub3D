@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:39:18 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/09 14:00:12 by mouerchi         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:21:53 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,18 @@ int	is_next_door(t_cube *data)
 		|| data->map[(int)data->player.y][(int)data->player.x - 1] == 'D')
 		return (1);
 	return (0);
+}
+
+int	*make_array(t_cube *data)
+{
+	int	i;
+	int	*array;
+
+	i = 0;
+	while (data->map[i])
+		i++;
+	array = malloc(sizeof(int) * i);
+	if (!array)
+		free_all(data);
+	return (array);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:42:16 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/09 16:27:18 by mouerchi         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:07:37 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, unsigned int color)
 {
 	char	*dst;
 
+	if (x >= WIDTH || y >= HEIGHT || y < 0 || x < 0)
+		return ;
 	dst = NULL;
 	dst = mlx->img.addr + (y * mlx->img.line_length + x
 			* (mlx->img.bits_per_pixel / 8));

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+         #
+#    By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/05 17:56:35 by aammisse          #+#    #+#              #
-#    Updated: 2025/12/09 18:10:06 by mouerchi         ###   ########.fr        #
+#    Updated: 2025/12/10 15:38:02 by aammisse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = cub3D
 
 CC = cc
 
-FLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
+FLAGS = -Wall -Wextra -Werror
 
 SRCS = parsing/colors_directions.c GNL/get_next_line.c GNL/get_next_line_utils.c \
 		cub3D.c parsing/check_map.c parsing/create_map.c parsing/create_player.c \

@@ -3,32 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 18:08:57 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/09 17:41:44 by mouerchi         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:33:19 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <time.h>
 # include <math.h>
-# include <unistd.h>
-# include <string.h>
-# include <ctype.h>
 # include <fcntl.h>
 # include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/time.h>
 # include "GNL/get_next_line.h"
 # include "minilibx-linux/mlx.h"
 
 # define TILE_SIZE 20
-# define PLR_SPEED 0.05
-# define PLR_ROTATE 0.035
+# define PLR_SPEED 0.07
+# define PLR_ROTATE 0.05
 # define HITBOX 0.2
 # define TEX_SIZE 64
 
@@ -131,6 +124,7 @@ typedef struct s_player
 	double	dir_y;
 	double	plane_x;
 	double	plane_y;
+	double	speed;
 	int		move_direction_front;
 	int		move_direction_side;
 	int		turn_direction;
@@ -179,6 +173,7 @@ typedef struct s_cube
 	int			pixelx;
 	int			pixely;
 	int			map_fd;
+	int			*dimensions;
 	char		*map_file;
 	char		**map;
 	int			anime;
@@ -192,9 +187,13 @@ typedef struct s_cube
 	t_texture	texture;
 }				t_cube;
 
+int				ft_strcmp(const char *s1, const char *s2);
+int				*make_array(t_cube *data);
+void			get_map_dimensions(t_cube *data);
+int				is_wall(t_cube *data, double x, double y);
+int				get_map_height(char **map);
 void			init_textures(t_cube *data);
 unsigned int	get_pixel_color(t_img *img, int x, int y);
-double			get_wallX(t_cube *data);
 void			get_tex_info(t_cube *data, t_img **tex, int *tex_x);
 void			create_doors(t_cube *data);
 t_door			*get_units(t_cube *data, int x, int y);
@@ -234,7 +233,6 @@ int				check_edges(char **map);
 int				check_top_bot(char **map);
 int				check_newline(char **map);
 void			update_player(t_cube *data);
-void			render_frame(t_cube *data);
 int				is_closed(t_cube *data);
 t_door			*get_units(t_cube *data, int x, int y);
 int				is_door_closed(t_cube *data, double x, double y);
@@ -263,9 +261,9 @@ void			cast_rays(t_cube *data);
 void			draw_sprite(t_cube *data);
 void			sprite_animation(t_cube *data);
 int				create_rgb(t_colors *color);
-void			move_back(t_cube *data, double *newX, double *newY);
-void			move_right(t_cube *data, double *newX, double *newY);
-void			move_left(t_cube *data, double *newX, double *newY);
+void			move_back(t_cube *data, double newX, double newY);
+void			move_right(t_cube *data, double newX, double newY);
+void			move_left(t_cube *data, double newX, double newY);
 void			rotate_left(t_cube *data);
 void			rotate_right(t_cube *data);
 void			draw_tile(t_cube *data, int color, int x, int y);

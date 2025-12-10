@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors_directions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 18:08:42 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/09 13:26:02 by mouerchi         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:36:49 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,14 @@ t_colors	handle_colors(char *str, t_cube *data)
 	return (rgb);
 }
 
+int	ft_isspace(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\n'
+		|| c == '\v' || c == '\f' || c == '\r')
+		return (1);
+	return (0);
+}
+
 char	*handle_texture(char *str, t_cube *data)
 {
 	int		len;
@@ -70,7 +78,7 @@ char	*handle_texture(char *str, t_cube *data)
 	char	*texture_file;
 
 	start = 3;
-	while (str[start] && isspace(str[start]))
+	while (str[start] && ft_isspace(str[start]))
 		start++;
 	len = start;
 	while (str[len])
