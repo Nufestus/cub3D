@@ -6,7 +6,7 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 13:57:36 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/10 14:51:20 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/13 14:23:45 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ void	draw_line(int x, t_cube *data)
 		dda.tex_y = (int)dda.tex_pos % dda.tex->img_height;
 		dda.tex_pos += dda.step;
 		dda.color = get_pixel_color(dda.tex, dda.tex_x, dda.tex_y);
-		set_darkness(data, &dda.color);
 		my_mlx_pixel_put(&data->mlxstruct, x, dda.y, dda.color);
 		dda.y++;
 	}

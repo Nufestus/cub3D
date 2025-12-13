@@ -6,7 +6,7 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 18:08:57 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/10 16:17:23 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/13 14:23:56 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,6 @@ typedef struct s_cube
 	char		*map_file;
 	char		**map;
 	int			*dimensions;
-	int			dark;
 	t_ray		ray;
 	t_player	player;
 	t_map		*list_map;
@@ -146,7 +145,6 @@ int				*make_array(t_cube *data);
 void			get_map_dimensions(t_cube *data);
 int				is_wall(t_cube *data, double x, double y);
 int				get_map_height(char **map);
-void			set_darkness(t_cube *data, int *color);
 int				create_rgb(t_colors *color);
 int				collides(t_cube *data, double x, double y);
 void			move_back(t_cube *data, double newX, double newY);
