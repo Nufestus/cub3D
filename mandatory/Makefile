@@ -6,7 +6,7 @@
 #    By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/05 17:56:35 by aammisse          #+#    #+#              #
-#    Updated: 2025/12/13 13:47:40 by aammisse         ###   ########.fr        #
+#    Updated: 2025/12/13 14:17:47 by aammisse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ run:
 
 clean:
 	@rm -rf ${OBJS}
+	@make clean -C minilibx-linux
 
 fclean: clean
 	@rm -rf ${NAME}
