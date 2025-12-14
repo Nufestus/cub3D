@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dda_algorithm.c                                    :+:      :+:    :+:   */
+/*   dda_algorithm_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 13:57:36 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/12 15:24:49 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/14 13:42:01 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
+#include "../cub3D_bonus.h"
 
 void	initialize_values(int x, t_cube *data)
 {

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_substr_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:39:18 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/10 15:19:16 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/14 14:02:21 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
+#include "../cub3D_bonus.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
@@ -49,12 +49,22 @@ int	lengthcalc(size_t a, char *string)
 
 void	destroy_all(t_cube *data)
 {
+	int	i;
+
+	i = 0;
+	safe_destroy(data->mlxstruct.mlx, &data->texture.wall_n);
+	safe_destroy(data->mlxstruct.mlx, &data->texture.wall_s);
+	safe_destroy(data->mlxstruct.mlx, &data->texture.wall_e);
+	safe_destroy(data->mlxstruct.mlx, &data->texture.wall_w);
+	safe_destroy(data->mlxstruct.mlx, &data->texture.door);
+	safe_destroy(data->mlxstruct.mlx, &data->mlxstruct.img);
+	while (i < 8)
+		safe_destroy(data->mlxstruct.mlx, &data->texture.sprite.torch[i++]);
 	if (data->mlxstruct.win)
 		mlx_destroy_window(data->mlxstruct.mlx, data->mlxstruct.win);
-	if (data->mlxstruct.img.img)
-		mlx_destroy_image(data->mlxstruct.mlx, data->mlxstruct.img.img);
 	if (data->mlxstruct.mlx)
 		mlx_destroy_display(data->mlxstruct.mlx);
+	free_all(data);
 	free(data->mlxstruct.mlx);
 	exit(0);
 }

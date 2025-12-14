@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.h                                            :+:      :+:    :+:   */
+/*   cub3D_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 18:08:57 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/14 13:09:50 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/14 14:02:56 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 # include <math.h>
 # include <fcntl.h>
 # include <stdio.h>
-# include "GNL/get_next_line.h"
+# include "GNL/get_next_line_bonus.h"
 # include "minilibx-linux/mlx.h"
 
 # define TILE_SIZE 20
 # define PLR_ROTATE 0.05
-# define HITBOX 0.2
+# define HITBOX 0.1
 # define TEX_SIZE 64
 
 # define WIDTH 1024
@@ -186,6 +186,7 @@ typedef struct s_cube
 	t_texture	texture;
 }				t_cube;
 
+void			safe_destroy(void *mlx, t_img *img);
 int				ft_strcmp(const char *s1, const char *s2);
 int				*make_array(t_cube *data);
 void			get_map_dimensions(t_cube *data);

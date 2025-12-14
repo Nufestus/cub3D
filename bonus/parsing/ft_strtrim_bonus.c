@@ -1,16 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   ft_strtrim_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:37:46 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/10 15:19:21 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/14 14:02:41 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
+#include "../cub3D_bonus.h"
+
+void	safe_destroy(void *mlx, t_img *img)
+{
+	if (img->img)
+		mlx_destroy_image(mlx, img->img);
+}
 
 static char	*alloc(char *str)
 {
