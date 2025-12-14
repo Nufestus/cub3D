@@ -6,7 +6,7 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 18:08:57 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/14 13:30:10 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/14 13:47:01 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 # define TILE_SIZE 30
 # define PLR_ROTATE 0.035
-# define HITBOX 0.2
+# define HITBOX 0.1
 # define TEX_SIZE 64
 
 # define WIDTH 1024
