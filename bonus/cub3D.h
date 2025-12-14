@@ -6,7 +6,7 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 18:08:57 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/13 13:45:34 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/14 13:09:50 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ int				ft_strncmp(const char *s1, const char *s2, size_t n);
 int				ft_atoi(const char *str);
 int				openmap(t_cube *data);
 void			create_map(t_cube *data);
-int				check_player(char **map);
+void			check_player(char **map, t_cube *data);
 int				parse_map(t_cube *data);
 int				check_space(char *str);
 void			read_from_map(t_cube *data);

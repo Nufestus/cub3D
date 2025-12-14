@@ -6,7 +6,7 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 18:08:42 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/10 15:36:49 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/14 13:27:53 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_colors	handle_colors(char *str, t_cube *data)
 		free(str);
 		gnl_free(data->map_fd);
 		free_all(data);
-		printf("Colors Error\n");
+		printf("Error\nColors Error\n");
 		exit(1);
 	}
 	colors = ft_split(string, ',');
@@ -89,6 +89,7 @@ char	*handle_texture(char *str, t_cube *data)
 	free(copy);
 	if (!check_ext(texture_file))
 	{
+		printf("Error\nProblem in Textures\n");
 		free(texture_file);
 		free(str);
 		gnl_free(data->map_fd);

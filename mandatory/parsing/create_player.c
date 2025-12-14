@@ -6,7 +6,7 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:40:31 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/10 15:35:59 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/14 13:30:05 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	openmap(t_cube *data)
 	return (fd);
 }
 
-int	check_player(char **map)
+void	check_player(char **map, t_cube *data)
 {
 	int	i;
 	int	j;
@@ -46,8 +46,11 @@ int	check_player(char **map)
 		i++;
 	}
 	if (count > 1 || !count)
-		return (1);
-	return (0);
+	{
+		printf("Error\nMissing or Multiple Player(s)\n");
+		free_all(data);
+		exit(1);
+	}
 }
 
 int	parse_map(t_cube *data)
@@ -56,8 +59,7 @@ int	parse_map(t_cube *data)
 		return (1);
 	if (check_newline(data->map))
 		return (1);
-	if (check_player(data->map))
-		return (1);
+	check_player(data->map, data);
 	if (check_edges(data->map))
 		return (1);
 	if (check_middle(data->map, data))
@@ -70,7 +72,7 @@ void	create_map(t_cube *data)
 	make_map(data);
 	if (parse_map(data))
 	{
-		write(2, "Error\n", 7);
+		printf("Error\nInvalid Map\n");
 		free_all(data);
 		exit(1);
 	}
