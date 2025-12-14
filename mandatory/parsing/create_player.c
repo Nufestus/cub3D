@@ -6,7 +6,7 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:40:31 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/14 13:30:05 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/14 15:56:09 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,11 @@ void	check_player(char **map, t_cube *data)
 int	parse_map(t_cube *data)
 {
 	if (!data->map)
-		return (1);
+	{
+		printf("Error\nMissing Color/Texture/Map\n");
+		free_all(data);
+		exit(1);
+	}
 	if (check_newline(data->map))
 		return (1);
 	check_player(data->map, data);
