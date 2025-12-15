@@ -6,7 +6,7 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 13:56:57 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/10 15:22:25 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/15 14:18:43 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,11 @@ int	collides(t_cube *data, double x, double y)
 void	move_front(t_cube *data, double newX, double newY)
 {
 	newX = data->player.x + data->player.dir_x * data->player.speed;
-	newY = data->player.y + data->player.dir_y * data->player.speed;
-	if (!collides(data, newX, data->player.y)
-		&& !collides(data, data->player.x, newY))
-	{
+	if (!collides(data, newX, data->player.y))
 		data->player.x = newX;
+	newY = data->player.y + data->player.dir_y * data->player.speed;
+	if (!collides(data, data->player.x, newY))
 		data->player.y = newY;
-	}
 }
 
 void	update_player(t_cube *data)

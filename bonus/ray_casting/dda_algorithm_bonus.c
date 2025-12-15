@@ -6,7 +6,7 @@
 /*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 13:57:36 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/14 13:42:01 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/15 16:18:15 by aammisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ void	set_resources(t_dda *dda, t_cube *data, int x)
 {
 	dda->lineheight = HEIGHT / data->ray.perpwalldist;
 	dda->step = ((double)dda->tex->img_height / (double)dda->lineheight);
-	dda->drawstart = -dda->lineheight / 2 + HEIGHT / 2;
+	dda->drawstart = HEIGHT / 2 - dda->lineheight / 2;
 	if (dda->drawstart < 0)
 		dda->drawstart = 0;
-	dda->drawend = dda->lineheight / 2 + HEIGHT / 2;
+	dda->drawend = HEIGHT / 2 + dda->lineheight / 2;
 	if (dda->drawend >= HEIGHT)
 		dda->drawend = HEIGHT - 1;
 	dda->tex_pos = (dda->drawstart - HEIGHT / 2 + dda->lineheight / 2)
