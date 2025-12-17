@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:40:00 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/10 15:35:47 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/17 13:58:45 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	read_from_map(t_cube *data)
 		if (count < 6)
 			handle_directions(line, data, &count);
 		else if (count == 6)
-			newnode(line, &data->list_map);
+			newnode(data, line, &data->list_map);
 		if (ft_strcmp(line, "\n") && check_space(line))
 			linecount++;
 		free(line);
@@ -52,10 +52,10 @@ void	read_from_map(t_cube *data)
 
 int	count_without_space(t_map **ptr)
 {
-	int		i;
+	int		flag;
 	t_map	*copy;
 
-	i = 0;
+	flag = 0;
 	while (*ptr)
 	{
 		if ((*ptr)->line[0] == '\n' && (*ptr)->line[1] == '\0')
@@ -66,13 +66,13 @@ int	count_without_space(t_map **ptr)
 	copy = *ptr;
 	while (copy)
 	{
+		if (flag == 1 && copy->line[0] != '\n')
+			return (0);
 		if (copy->line[0] == '\n' && copy->line[1] == '\0')
-			i++;
-		else
-			i = 0;
+			flag = 1;
 		copy = copy->next;
 	}
-	return (ft_lstsize(*ptr) - i);
+	return (ft_lstsize(*ptr));
 }
 
 void	make_map(t_cube *data)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:38:33 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/14 13:40:41 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/17 14:11:43 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,12 @@ int	check_edges(char **map)
 	i = 0;
 	while (map[i])
 	{
-		if (!ft_strchr("1 	", map[i][0]) ||
+		if (map[i][0] == '\0')
+		{
+			i++;
+			continue ;
+		}
+		else if (!ft_strchr("1 	", map[i][0]) ||
 			!ft_strchr("1 	", map[i][ft_strlen(map[i]) - 1]))
 			return (1);
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors_directions_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 18:08:42 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/14 13:41:11 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/17 13:49:34 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,13 @@ char	*handle_texture(char *str, t_cube *data)
 
 void	handle_directions(char *str, t_cube *data, int *count)
 {
-	if (!ft_strncmp(str, "NO ", 3))
+	if (!ft_strncmp(str, "NO ", 3) && !data->texture.north)
 		data->texture.north = handle_texture(str, data);
-	else if (!ft_strncmp(str, "SO ", 3))
+	else if (!ft_strncmp(str, "SO ", 3) && !data->texture.south)
 		data->texture.south = handle_texture(str, data);
-	else if (!ft_strncmp(str, "WE ", 3))
+	else if (!ft_strncmp(str, "WE ", 3) && !data->texture.west)
 		data->texture.west = handle_texture(str, data);
-	else if (!ft_strncmp(str, "EA ", 3))
+	else if (!ft_strncmp(str, "EA ", 3) && !data->texture.east)
 		data->texture.east = handle_texture(str, data);
 	else if (!ft_strncmp(str, "F ", 2))
 		data->texture.floor_color = handle_colors(str, data);

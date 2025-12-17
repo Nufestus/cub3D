@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 18:08:57 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/14 13:47:01 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/17 13:45:20 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ double			get_wallx(t_cube *data);
 void			get_tex_info(t_cube *data, t_img **tex, int *tex_x);
 void			render_map(t_mlx *mlxstruct, t_cube *data);
 int				rendering(t_cube *data);
-void			newnode(char *str, t_map **head);
+void			newnode(t_cube *data, char *str, t_map **head);
 t_map			*ft_lstnew(char *content);
 int				ft_lstsize(t_map *lst);
 t_map			*ft_lstlast(t_map *lst);

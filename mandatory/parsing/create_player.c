@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_player.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:40:31 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/14 15:56:09 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/17 14:00:32 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	parse_map(t_cube *data)
 {
 	if (!data->map)
 	{
-		printf("Error\nMissing Color/Texture/Map\n");
+		printf("Error\nInvalid Colors/Textures/Map\n");
 		free_all(data);
 		exit(1);
 	}

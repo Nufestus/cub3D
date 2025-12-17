@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_functions_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 09:36:53 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/14 13:41:45 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/17 13:49:52 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,20 @@ t_map	*ft_lstnew(char *content)
 	return (newnode);
 }
 
-void	newnode(char *str, t_map **head)
+void	newnode(t_cube *data, char *str, t_map **head)
 {
 	t_map	*newnode;
 
+	if (!ft_strncmp(str, "NO ", 3) || !ft_strncmp(str, "SO ", 3)
+		|| !ft_strncmp(str, "WE ", 3) || !ft_strncmp(str, "EA ", 3)
+		|| !ft_strncmp(str, "F ", 2) || !ft_strncmp(str, "C ", 2))
+	{
+		free(str);
+		gnl_free(data->map_fd);
+		free_all(data);
+		printf("Error\nToo much Textures or Colors\n");
+		exit(1);
+	}
 	newnode = ft_lstnew(ft_strdup(str));
 	ft_lstadd_back(head, newnode);
 }

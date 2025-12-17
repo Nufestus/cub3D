@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aammisse <aammisse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouerchi <mouerchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 18:08:57 by aammisse          #+#    #+#             */
-/*   Updated: 2025/12/14 14:02:56 by aammisse         ###   ########.fr       */
+/*   Updated: 2025/12/17 13:50:07 by mouerchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ void			create_doors(t_cube *data);
 t_door			*get_units(t_cube *data, int x, int y);
 void			render_map(t_mlx *mlxstruct, t_cube *data);
 int				rendering(t_cube *data);
-void			newnode(char *str, t_map **head);
+void			newnode(t_cube *data, char *str, t_map **head);
 t_map			*ft_lstnew(char *content);
 int				ft_lstsize(t_map *lst);
 t_map			*ft_lstlast(t_map *lst);
